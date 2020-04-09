@@ -66,7 +66,7 @@ console.log(vvs.toString(42))
 <dt><a href="#toErrorMessage">toErrorMessage(error, [prefix], [replaces], [sourсe])</a> ⇒ <code>string</code></dt>
 <dd><p>Returns a nice formatted error message - wrapper for function format()</p>
 </dd>
-<dt><a href="#split">split(string_for_split, left, left, [collapse_doubles])</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
+<dt><a href="#split">split(string_for_split, left, right, [collapse_doubles])</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
 <dd><p>split string, for example - &#39;{asasdas}{234235}{}{vcvc}&#39;, and return array [&#39;asasdas&#39;,&#39;234235&#39;,&#39;&#39;,&#39;vcvc&#39;]</p>
 </dd>
 <dt><a href="#insertAt">insertAt(string_where_insert, index, substring_for_replace)</a> ⇒ <code>string</code></dt>
@@ -420,7 +420,7 @@ try {throw new Error('ops')} catch (error) {throw require('vv-shared').toErrorMe
 ```
 <a name="split"></a>
 
-## split(string_for_split, left, left, [collapse_doubles]) ⇒ <code>Array.&lt;string&gt;</code>
+## split(string_for_split, left, right, [collapse_doubles]) ⇒ <code>Array.&lt;string&gt;</code>
 split string, for example - '{asasdas}{234235}{}{vcvc}', and return array ['asasdas','234235','','vcvc']
 
 **Kind**: global function  
@@ -429,7 +429,7 @@ split string, for example - '{asasdas}{234235}{}{vcvc}', and return array ['asas
 | --- | --- | --- |
 | string_for_split | <code>any</code> |  |
 | left | <code>string</code> | left border |
-| left | <code>string</code> | right border |
+| right | <code>string</code> | right border |
 | [collapse_doubles] | <code>&#x27;no&#x27;</code> \| <code>&#x27;collapse\_with\_lower&#x27;</code> \| <code>&#x27;collapse\_without\_lower&#x27;</code> | default = 'no' |
 
 **Example**  

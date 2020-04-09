@@ -772,7 +772,7 @@ function toErrorMessage (error, prefix, replaces, sourсe) {
  * @static
  * @param {any} string_for_split
  * @param {string} left left border
- * @param {string} left right border
+ * @param {string} right right border
  * @param {'no'|'collapse_with_lower'|'collapse_without_lower'} [collapse_doubles] default = 'no'
  * @returns {string[]}
  * @example console.log(require('vv-shared').split('{asasdas}{234235}{}{vcvc}','{','}'))
