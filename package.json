@@ -1,11 +1,11 @@
 {
   "name": "vv-shared",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "many small general-purpose functions",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "doc": "jsdoc2md index.js > readme.md",
+    "doc": "type .readme.md > readme.md && jsdoc2md index.js >> readme.md",
     "updatever": "npm version patch --no-git-tag-version",
     "gitadd": "git add ./readme.md ./package.json ./package-lock.json"
   },

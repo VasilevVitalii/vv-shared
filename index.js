@@ -53,7 +53,6 @@ const REGEX_GUID=/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[
  * @property {number} text_length
  * @property {number} offset_length
 */
-
 /**
  * @typedef type_text_page_byte
  * @property {number} step

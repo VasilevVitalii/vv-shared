@@ -1,3 +1,11 @@
+## Install & Use
+```cmd
+npm i vv-shared
+```
+```js
+const vvs = require('vv-shared')
+console.log(vvs.toString(42))
+```
 ## Functions
 
 <dl>
