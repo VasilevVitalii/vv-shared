@@ -1,0 +1,31 @@
+{
+  "name": "vv-shared",
+  "version": "2.0.1",
+  "description": "many small general-purpose functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "doc": "jsdoc2md index.js > readme.md",
+    "updatever": "npm version patch --no-git-tag-version",
+    "gitadd": "git add ./readme.md ./package.json ./package-lock.json"
+  },
+  "pre-commit": "doc, updatever, gitadd",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VasilevVitalii/vv-shared.git"
+  },
+  "author": "Vitalii Vasilev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VasilevVitalii/vv-shared/issues"
+  },
+  "homepage": "https://github.com/VasilevVitalii/vv-shared#readme",
+  "devDependencies": {
+    "jsdoc-to-markdown": "^5.0.3",
+    "mocha": "^7.1.1",
+    "pre-commit": "^1.2.2"
+  },
+  "dependencies": {
+    "@types/node": "^13.11.1"
+  }
+}
