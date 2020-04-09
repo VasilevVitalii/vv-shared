@@ -8,12 +8,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
+      - uses: actions/upload-artifact@v1
         with:
           node-version: 13
           registry-url: https://registry.npmjs.org/
-
       - run: npm i
-      - run: npm test > echo
+      - run: npm test > test_result.txt
+        if: failure()
+          with:
+            name: test_result
+            path: test_result.txt
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
