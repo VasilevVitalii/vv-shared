@@ -11,14 +11,15 @@ jobs:
         with:
           node-version: 13
           registry-url: https://registry.npmjs.org/
+      - run: npm i
+      - run: mkdir -p res
+      - run: chmod 0777 ./res
+      - run: npm test > res/test.log
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: res
           path: res
-      - run: npm i
-      - run: mkdir -p res
-      - run: echo npm test > res/test.log
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
