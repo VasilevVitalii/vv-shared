@@ -70,7 +70,7 @@ const REGEX_GUID=/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[
  */
 function isEmpty(object, extra) {
     let type = typeof object
-
+return false
     if (
         type === 'undefined' ||
         object === null ||
