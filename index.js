@@ -986,7 +986,7 @@ function formatExt(string_for_format, replaces, left, right) {
  * Format date to string
  * @static
  * @param {any} date date
- * @param {112|126|10126|104|104108|1041082|1041083} format variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mm:ss), 1041082(dd.mm.yyyy hh:mm), 1041083(yyyy.mm.dd hh:mm)
+ * @param {112|126|10126|104|104108|1041082|1041083|1041084} format variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss)
  * @returns {string} string or undefined
  * @example
  * console.log(require('vv-shared').formatDate(new Date(),126)) // return current date as string in format yyyy-mm-ddThh:mi:ss.mmm
@@ -1105,22 +1105,41 @@ function formatDate(date, format) {
                 (minute > 9 ? '' : '0'),
                 minute.toString(),
             )
-            case 1041083:
-                return ''.concat(
-                    year.toString(),
-                    '.',
-                    (month > 9 ? '' : '0'),
-                    month.toString(),
-                    '.',
-                    (day > 9 ? '' : '0'),
-                    day.toString(),
-                    ' ',
-                    (hour > 9 ? '' : '0'),
-                    hour.toString(),
-                    ':',
-                    (minute > 9 ? '' : '0'),
-                    minute.toString(),
-                )
+        case 1041083:
+            return ''.concat(
+                year.toString(),
+                '.',
+                (month > 9 ? '' : '0'),
+                month.toString(),
+                '.',
+                (day > 9 ? '' : '0'),
+                day.toString(),
+                ' ',
+                (hour > 9 ? '' : '0'),
+                hour.toString(),
+                ':',
+                (minute > 9 ? '' : '0'),
+                minute.toString(),
+            )
+        case 1041084:
+            return ''.concat(
+                year.toString(),
+                '.',
+                (month > 9 ? '' : '0'),
+                month.toString(),
+                '.',
+                (day > 9 ? '' : '0'),
+                day.toString(),
+                ' ',
+                (hour > 9 ? '' : '0'),
+                hour.toString(),
+                ':',
+                (minute > 9 ? '' : '0'),
+                minute.toString(),
+                ':',
+                (second > 9 ? '' : '0'),
+                second.toString()
+            )
         default:
             return undefined
     }

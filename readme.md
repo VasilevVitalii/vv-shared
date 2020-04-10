@@ -533,7 +533,7 @@ Format date to string
 | Param | Type | Description |
 | --- | --- | --- |
 | date | <code>any</code> | date |
-| format | <code>112</code> \| <code>126</code> \| <code>10126</code> \| <code>104</code> \| <code>104108</code> \| <code>1041082</code> \| <code>1041083</code> | variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mm:ss), 1041082(dd.mm.yyyy hh:mm), 1041083(yyyy.mm.dd hh:mm) |
+| format | <code>112</code> \| <code>126</code> \| <code>10126</code> \| <code>104</code> \| <code>104108</code> \| <code>1041082</code> \| <code>1041083</code> \| <code>1041084</code> | variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss) |
 
 **Example**  
 ```js
