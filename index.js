@@ -1,5 +1,6 @@
 // @ts-check
 exports.isEmpty=isEmpty
+exports.isEmptyString=isEmptyString
 exports.isFunction=isFunction
 exports.isGuid=isGuid
 exports.nz=nz
@@ -61,24 +62,34 @@ const REGEX_GUID=/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[
 */
 
 /**
- * Check object for undefined, null, NaN, optional - empty string (after .trim())
+ * Check object for undefined, null, NaN
  * @static
  * @param {any} object object for check
- * @param {'empty_string'} [extra] - additional
  * @returns {boolean}
  */
-function isEmpty(object, extra) {
+function isEmpty(object) {
     let type = typeof object
 
     if (
         type === 'undefined' ||
         object === null ||
-        (type === 'number' && isNaN(object)) ||
-        (extra === 'empty_string' && type === 'string' && (object.length === 0 || object.trim().length === 0))
+        (type === 'number' && isNaN(object))
     ) {
         return true
     }
 
+    return false
+}
+
+/**
+ * isEmpty + .trim() + check len > 0
+ * @static
+ * @param {any} object object for check
+ * @returns {boolean}
+ */
+function isEmptyString(object) {
+    if (isEmpty(object) === true) return true
+    if (typeof object === 'string' && (object.length === 0 || object.trim().length === 0)) return true
     return false
 }
 

@@ -34,7 +34,11 @@ describe("isEmpty", function() {
             }
         }
         it(title, function() {
-            assert.equal(testing_lib.isEmpty(o.param, extra), result)
+            if (extra === 'empty_string') {
+                assert.equal(testing_lib.isEmptyString(o.param), result)
+            } else {
+                assert.equal(testing_lib.isEmpty(o.param), result)
+            }
         })
     })
 })

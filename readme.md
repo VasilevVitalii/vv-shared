@@ -9,8 +9,11 @@ console.log(vvs.toString(42))
 ## Functions
 
 <dl>
-<dt><a href="#isEmpty">isEmpty(object, [extra])</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check object for undefined, null, NaN, optional - empty string (after .trim())</p>
+<dt><a href="#isEmpty">isEmpty(object)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check object for undefined, null, NaN</p>
+</dd>
+<dt><a href="#isEmptyString">isEmptyString(object)</a> ⇒ <code>boolean</code></dt>
+<dd><p>isEmpty + .trim() + check len &gt; 0</p>
 </dd>
 <dt><a href="#isFunction">isFunction(object)</a> ⇒ <code>boolean</code></dt>
 <dd><p>Check object for function</p>
@@ -124,15 +127,25 @@ console.log(vvs.toString(42))
 
 <a name="isEmpty"></a>
 
-## isEmpty(object, [extra]) ⇒ <code>boolean</code>
-Check object for undefined, null, NaN, optional - empty string (after .trim())
+## isEmpty(object) ⇒ <code>boolean</code>
+Check object for undefined, null, NaN
 
 **Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | object | <code>any</code> | object for check |
-| [extra] | <code>&#x27;empty\_string&#x27;</code> | additional |
+
+<a name="isEmptyString"></a>
+
+## isEmptyString(object) ⇒ <code>boolean</code>
+isEmpty + .trim() + check len > 0
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>any</code> | object for check |
 
 <a name="isFunction"></a>
 
