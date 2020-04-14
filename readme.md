@@ -117,8 +117,6 @@ console.log(vvs.toString(42))
 <dt><a href="#readdir">readdir(dir, callback)</a></dt>
 <dd><p>Recursive scan directory</p>
 </dd>
-<dt><a href="#readdir_private">readdir_private(dir, callback)</a></dt>
-<dd></dd>
 </dl>
 
 ## Typedefs
@@ -702,20 +700,6 @@ Recursive scan directory
 ```js
 require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
 ```
-<a name="readdir_private"></a>
-
-## readdir\_private(dir, callback)
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| dir | <code>string</code> | 
-| callback | <code>callback\_readdir</code> | 
-
-<a name="readdir_private..files"></a>
-
-### readdir_private~files : [<code>Array.&lt;type\_readdir&gt;</code>](#type_readdir)
-**Kind**: inner property of [<code>readdir\_private</code>](#readdir_private)  
 <a name="type_text_page_char"></a>
 
 ## type\_text\_page\_char

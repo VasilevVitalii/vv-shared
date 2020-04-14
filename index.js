@@ -1484,6 +1484,7 @@ function text_page_byte (text, text_page_char_result) {
  */
 /**
  * Recursive scan directory
+ * @static
  * @param {string} dir
  * @param {callback_readdir} callback
  * @example
@@ -1499,6 +1500,7 @@ function readdir(dir, callback) {
 }
 
 /**
+ * @private
  * @param {string} dir
  * @param {callback_readdir} callback
  */
