@@ -41,7 +41,10 @@ exports.border_del = border_del
 
 exports.text_page_char = text_page_char
 exports.text_page_byte = text_page_byte
+exports.readdir = readdir
 
+const fs = require('fs')
+const path = require('path')
 const REGEX_INT=/^[+\-]?\d+$/
 const REGEX_FLOAT=/^[+-]?\d+(\.\d+)?$/
 const REGEX_IP=/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
@@ -1463,4 +1466,80 @@ function text_page_byte (text, text_page_char_result) {
     })
 
     return result
+}
+
+/**
+ * @typedef type_readdir
+ * @property {string} path
+ * @property {string} file
+ * @property {number} size_bytes
+ * @property {Date} date_create
+ * @property {Date} date_edit
+ */
+/**
+ * @private
+ * @callback callback_readdir
+ * @param {Error} error
+ * @param {type_readdir[]} files
+ */
+/**
+ * Recursive scan directory
+ * @param {string} dir
+ * @param {callback_readdir} callback
+ * @example
+ * require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
+ */
+function readdir(dir, callback) {
+    let already_send_callback = false
+    readdir_private(dir, (error, files) => {
+        if (already_send_callback) return
+        already_send_callback = true
+        callback(error, files)
+    })
+}
+
+/**
+ * @param {string} dir
+ * @param {callback_readdir} callback
+ */
+function readdir_private(dir, callback) {
+    /** @type {type_readdir[]} */
+    let files = []
+
+    fs.readdir(dir, (error, list) => {
+        if (!isEmpty(error)) {
+            callback(new Error(toErrorMessage(error, 'on read dir "{0}"', dir, 'message')), undefined)
+        }
+        let pending = list.length
+        if (!pending) callback(undefined, files)
+
+        list.forEach(file_relative => {
+            let file_absolute = path.resolve(dir, file_relative)
+            fs.stat(file_absolute, function(error, stat) {
+                if (!isEmpty(error)) {
+                    callback(new Error(toErrorMessage(error, 'on get stat for file/dir "{0}"', file_absolute, 'message')), undefined)
+                }
+                if (!isEmpty(stat)) {
+                    if (stat.isDirectory()) {
+                        readdir_private(file_absolute, function(error, res) {
+                            if (!isEmpty(error)) {
+                                callback(error, undefined)
+                            }
+                            files = files.concat(res)
+                            if (!--pending) callback(undefined, files)
+                        })
+                    } else if (stat.isFile()) {
+                        files.push({
+                            file: file_relative,
+                            path: dir,
+                            size_bytes: stat.size,
+                            date_create: stat.birthtime,
+                            date_edit: stat.mtime
+                        })
+                        if (!--pending) callback(undefined, files)
+                    }
+                }
+            })
+        })
+    })
 }

@@ -114,6 +114,11 @@ console.log(vvs.toString(42))
 <dt><a href="#text_page_byte">text_page_byte(text, text_page_char_result)</a> ⇒ <code><a href="#type_text_page_byte">Array.&lt;type_text_page_byte&gt;</a></code></dt>
 <dd><p>Convert function text_page_char result to byte markup for fs.createReadStream(...)</p>
 </dd>
+<dt><a href="#readdir">readdir(dir, callback)</a></dt>
+<dd><p>Recursive scan directory</p>
+</dd>
+<dt><a href="#readdir_private">readdir_private(dir, callback)</a></dt>
+<dd></dd>
 </dl>
 
 ## Typedefs
@@ -122,6 +127,8 @@ console.log(vvs.toString(42))
 <dt><a href="#type_text_page_char">type_text_page_char</a></dt>
 <dd></dd>
 <dt><a href="#type_text_page_byte">type_text_page_byte</a></dt>
+<dd></dd>
+<dt><a href="#type_readdir">type_readdir</a></dt>
 <dd></dd>
 </dl>
 
@@ -679,6 +686,36 @@ Convert function text_page_char result to byte markup for fs.createReadStream(..
 | text | <code>string</code> | 
 | text_page_char_result | [<code>Array.&lt;type\_text\_page\_char&gt;</code>](#type_text_page_char) | 
 
+<a name="readdir"></a>
+
+## readdir(dir, callback)
+Recursive scan directory
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| dir | <code>string</code> | 
+| callback | <code>callback\_readdir</code> | 
+
+**Example**  
+```js
+require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
+```
+<a name="readdir_private"></a>
+
+## readdir\_private(dir, callback)
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| dir | <code>string</code> | 
+| callback | <code>callback\_readdir</code> | 
+
+<a name="readdir_private..files"></a>
+
+### readdir_private~files : [<code>Array.&lt;type\_readdir&gt;</code>](#type_readdir)
+**Kind**: inner property of [<code>readdir\_private</code>](#readdir_private)  
 <a name="type_text_page_char"></a>
 
 ## type\_text\_page\_char
@@ -703,4 +740,18 @@ Convert function text_page_char result to byte markup for fs.createReadStream(..
 | step | <code>number</code> | 
 | position_start | <code>number</code> | 
 | position_end | <code>number</code> | 
+
+<a name="type_readdir"></a>
+
+## type\_readdir
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| path | <code>string</code> | 
+| file | <code>string</code> | 
+| size_bytes | <code>number</code> | 
+| date_create | <code>Date</code> | 
+| date_edit | <code>Date</code> | 
 
