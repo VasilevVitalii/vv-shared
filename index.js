@@ -40,7 +40,10 @@ exports.border_del = border_del
 
 exports.text_page_char = text_page_char
 exports.text_page_byte = text_page_byte
+exports.readdir = readdir
 
+const fs = require('fs')
+const path = require('path')
 const REGEX_INT=/^[+\-]?\d+$/
 const REGEX_FLOAT=/^[+-]?\d+(\.\d+)?$/
 const REGEX_IP=/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
@@ -985,7 +988,7 @@ function formatExt(string_for_format, replaces, left, right) {
  * Format date to string
  * @static
  * @param {any} date date
- * @param {112|126|10126|104|104108|1041082|1041083|1041084|'dy'|'sd'} format variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss), 'dy' (string (length 3) with number day in year), 'sd' (string (length 3) with number second in day)
+ * @param {112|1122|1123|1124|126|10126|104|104108|1041082|1041083|1041084|'dy'|'sd'} format variants: 112 (yyyymmdd), 1122 (yyyymmddhh), 1123 (yyyymmddhhmi), 1124 (yyyymmddhhmiss), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss), , 'dy' (string (length 3) with number day in year), 'sd' (string (length 3) with number second in day)
  * @returns {string} string or undefined
  * @example
  * console.log(require('vv-shared').formatDate(new Date(),126)) // return current date as string in format yyyy-mm-ddThh:mi:ss.mmm
@@ -1024,6 +1027,42 @@ function formatDate(date, format) {
                 month.toString(),
                 (day > 9 ? '' : '0'),
                 day.toString()
+            )
+        case '1122':
+            return ''.concat(
+                year.toString(),
+                (month > 9 ? '' : '0'),
+                month.toString(),
+                (day > 9 ? '' : '0'),
+                day.toString(),
+                (hour > 9 ? '' : '0'),
+                hour.toString()
+            )
+        case '1123':
+            return ''.concat(
+                year.toString(),
+                (month > 9 ? '' : '0'),
+                month.toString(),
+                (day > 9 ? '' : '0'),
+                day.toString(),
+                (hour > 9 ? '' : '0'),
+                hour.toString(),
+                (minute > 9 ? '' : '0'),
+                minute.toString()
+            )
+        case '1124':
+            return ''.concat(
+                year.toString(),
+                (month > 9 ? '' : '0'),
+                month.toString(),
+                (day > 9 ? '' : '0'),
+                day.toString(),
+                (hour > 9 ? '' : '0'),
+                hour.toString(),
+                (minute > 9 ? '' : '0'),
+                minute.toString(),
+                (second > 9 ? '' : '0'),
+                second.toString(),
             )
         case '126':
             return ''.concat(
@@ -1414,4 +1453,82 @@ function text_page_byte (text, text_page_char_result) {
     })
 
     return result
+}
+
+/**
+ * @typedef type_readdir
+ * @property {string} path
+ * @property {string} file
+ * @property {number} size_bytes
+ * @property {Date} date_create
+ * @property {Date} date_edit
+ */
+/**
+ * @private
+ * @callback callback_readdir
+ * @param {Error} error
+ * @param {type_readdir[]} files
+ */
+/**
+ * Recursive scan directory
+ * @static
+ * @param {string} dir
+ * @param {callback_readdir} callback
+ * @example
+ * require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
+ */
+function readdir(dir, callback) {
+    let already_send_callback = false
+    readdir_private(dir, (error, files) => {
+        if (already_send_callback) return
+        already_send_callback = true
+        callback(error, files)
+    })
+}
+
+/**
+ * @private
+ * @param {string} dir
+ * @param {callback_readdir} callback
+ */
+function readdir_private(dir, callback) {
+    /** @type {type_readdir[]} */
+    let files = []
+
+    fs.readdir(dir, (error, list) => {
+        if (!isEmpty(error)) {
+            callback(new Error(toErrorMessage(error, 'on read dir "{0}"', dir, 'message')), undefined)
+        }
+        let pending = list.length
+        if (!pending) callback(undefined, files)
+
+        list.forEach(file_relative => {
+            let file_absolute = path.resolve(dir, file_relative)
+            fs.stat(file_absolute, function(error, stat) {
+                if (!isEmpty(error)) {
+                    callback(new Error(toErrorMessage(error, 'on get stat for file/dir "{0}"', file_absolute, 'message')), undefined)
+                }
+                if (!isEmpty(stat)) {
+                    if (stat.isDirectory()) {
+                        readdir_private(file_absolute, function(error, res) {
+                            if (!isEmpty(error)) {
+                                callback(error, undefined)
+                            }
+                            files = files.concat(res)
+                            if (!--pending) callback(undefined, files)
+                        })
+                    } else if (stat.isFile()) {
+                        files.push({
+                            file: file_relative,
+                            path: dir,
+                            size_bytes: stat.size,
+                            date_create: stat.birthtime,
+                            date_edit: stat.mtime
+                        })
+                        if (!--pending) callback(undefined, files)
+                    }
+                }
+            })
+        })
+    })
 }

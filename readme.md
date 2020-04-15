@@ -111,6 +111,9 @@ console.log(vvs.toString(42))
 <dt><a href="#text_page_byte">text_page_byte(text, text_page_char_result)</a> ⇒ <code><a href="#type_text_page_byte">Array.&lt;type_text_page_byte&gt;</a></code></dt>
 <dd><p>Convert function text_page_char result to byte markup for fs.createReadStream(...)</p>
 </dd>
+<dt><a href="#readdir">readdir(dir, callback)</a></dt>
+<dd><p>Recursive scan directory</p>
+</dd>
 </dl>
 
 ## Typedefs
@@ -119,6 +122,8 @@ console.log(vvs.toString(42))
 <dt><a href="#type_text_page_char">type_text_page_char</a></dt>
 <dd></dd>
 <dt><a href="#type_text_page_byte">type_text_page_byte</a></dt>
+<dd></dd>
+<dt><a href="#type_readdir">type_readdir</a></dt>
 <dd></dd>
 </dl>
 
@@ -530,7 +535,7 @@ Format date to string
 | Param | Type | Description |
 | --- | --- | --- |
 | date | <code>any</code> | date |
-| format | <code>112</code> \| <code>126</code> \| <code>10126</code> \| <code>104</code> \| <code>104108</code> \| <code>1041082</code> \| <code>1041083</code> \| <code>1041084</code> \| <code>&#x27;dy&#x27;</code> \| <code>&#x27;sd&#x27;</code> | variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss), 'dy' (string (length 3) with number day in year), 'sd' (string (length 3) with number second in day) |
+| format | <code>112</code> \| <code>1122</code> \| <code>1123</code> \| <code>1124</code> \| <code>126</code> \| <code>10126</code> \| <code>104</code> \| <code>104108</code> \| <code>1041082</code> \| <code>1041083</code> \| <code>1041084</code> \| <code>&#x27;dy&#x27;</code> \| <code>&#x27;sd&#x27;</code> | variants: 112 (yyyymmdd), 1122 (yyyymmddhh), 1123 (yyyymmddhhmi), 1124 (yyyymmddhhmiss), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss), , 'dy' (string (length 3) with number day in year), 'sd' (string (length 3) with number second in day) |
 
 **Example**  
 ```js
@@ -661,6 +666,22 @@ Convert function text_page_char result to byte markup for fs.createReadStream(..
 | text | <code>string</code> | 
 | text_page_char_result | [<code>Array.&lt;type\_text\_page\_char&gt;</code>](#type_text_page_char) | 
 
+<a name="readdir"></a>
+
+## readdir(dir, callback)
+Recursive scan directory
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| dir | <code>string</code> | 
+| callback | <code>callback\_readdir</code> | 
+
+**Example**  
+```js
+require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
+```
 <a name="type_text_page_char"></a>
 
 ## type\_text\_page\_char
@@ -685,4 +706,18 @@ Convert function text_page_char result to byte markup for fs.createReadStream(..
 | step | <code>number</code> | 
 | position_start | <code>number</code> | 
 | position_end | <code>number</code> | 
+
+<a name="type_readdir"></a>
+
+## type\_readdir
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| path | <code>string</code> | 
+| file | <code>string</code> | 
+| size_bytes | <code>number</code> | 
+| date_create | <code>Date</code> | 
+| date_edit | <code>Date</code> | 
 
