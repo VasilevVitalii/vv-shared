@@ -87,9 +87,6 @@ console.log(vvs.toString(42))
 <dt><a href="#formatDate">formatDate(date, format)</a> ⇒ <code>string</code></dt>
 <dd><p>Format date to string</p>
 </dd>
-<dt><a href="#formatDayOfYear">formatDayOfYear([date])</a></dt>
-<dd><p>Return string (length 3) with number day in year</p>
-</dd>
 <dt><a href="#dateAdd">dateAdd(interval, value, date)</a> ⇒ <code>Date</code></dt>
 <dd><p>increase (or decrease) date by second or minutes or hours or days</p>
 </dd>
@@ -533,26 +530,11 @@ Format date to string
 | Param | Type | Description |
 | --- | --- | --- |
 | date | <code>any</code> | date |
-| format | <code>112</code> \| <code>126</code> \| <code>10126</code> \| <code>104</code> \| <code>104108</code> \| <code>1041082</code> \| <code>1041083</code> \| <code>1041084</code> | variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss) |
+| format | <code>112</code> \| <code>126</code> \| <code>10126</code> \| <code>104</code> \| <code>104108</code> \| <code>1041082</code> \| <code>1041083</code> \| <code>1041084</code> \| <code>&#x27;dy&#x27;</code> \| <code>&#x27;sd&#x27;</code> | variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss), 'dy' (string (length 3) with number day in year), 'sd' (string (length 3) with number second in day) |
 
 **Example**  
 ```js
 console.log(require('vv-shared').formatDate(new Date(),126)) // return current date as string in format yyyy-mm-ddThh:mi:ss.mmmconsole.log(require('vv-shared').formatDate(new Date(),112)) // return current date as string in format yyyymmdd
-```
-<a name="formatDayOfYear"></a>
-
-## formatDayOfYear([date])
-Return string (length 3) with number day in year
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [date] | <code>any</code> | default = new Date() |
-
-**Example**  
-```js
-console.log(require('vv-shared').formatDayOfYear (require('vv-shared').toDate('20200101'))) // return 001console.log(require('vv-shared').formatDayOfYear (require('vv-shared').toDate('20200323'))) // return 083console.log(require('vv-shared').formatDayOfYear (require('vv-shared').toDate('20200509'))) // return 130
 ```
 <a name="dateAdd"></a>
 

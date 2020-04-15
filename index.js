@@ -28,7 +28,6 @@ exports.replaceAll=replaceAll
 exports.format=format
 exports.formatExt=formatExt
 exports.formatDate=formatDate
-exports.formatDayOfYear=formatDayOfYear
 
 exports.dateAdd = dateAdd
 
@@ -986,7 +985,7 @@ function formatExt(string_for_format, replaces, left, right) {
  * Format date to string
  * @static
  * @param {any} date date
- * @param {112|126|10126|104|104108|1041082|1041083|1041084} format variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss)
+ * @param {112|126|10126|104|104108|1041082|1041083|1041084|'dy'|'sd'} format variants: 112 (yyyymmdd), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss), 'dy' (string (length 3) with number day in year), 'sd' (string (length 3) with number second in day)
  * @returns {string} string or undefined
  * @example
  * console.log(require('vv-shared').formatDate(new Date(),126)) // return current date as string in format yyyy-mm-ddThh:mi:ss.mmm
@@ -996,6 +995,19 @@ function formatDate(date, format) {
     let d = toDate(date)
     if (isEmpty(d)) return undefined
 
+    let f = toString(format,'').trim().toLowerCase()
+    if (isEmptyString(f)) return undefined
+
+    if (f === 'dy') {
+        let numDayPrepare = d.getTime() - new Date(d.getFullYear(), 0, 0).getTime()
+        let numDay = Math.floor(numDayPrepare / 86400000).toString()
+        return toCharArray('0', 3 - numDay.length).concat(numDay)
+    } else if (f === 'sd') {
+        let numSecondPrepare = d.getTime() - new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()
+        let numSecond = Math.floor(numSecondPrepare / 1000).toString()
+        return toCharArray('0', 5 - numSecond.length).concat(numSecond)
+    }
+
     let year = d.getFullYear()
     let month = d.getMonth() + 1
     let day = d.getDate()
@@ -1004,11 +1016,8 @@ function formatDate(date, format) {
     let second = d.getSeconds()
     let msec = d.getMilliseconds()
 
-    let f = toInt(format)
-    if (isEmpty(f)) return undefined
-
     switch (f) {
-        case 112:
+        case '112':
             return ''.concat(
                 year.toString(),
                 (month > 9 ? '' : '0'),
@@ -1016,7 +1025,7 @@ function formatDate(date, format) {
                 (day > 9 ? '' : '0'),
                 day.toString()
             )
-        case 126:
+        case '126':
             return ''.concat(
                 year.toString(),
                 '-',
@@ -1038,7 +1047,7 @@ function formatDate(date, format) {
                 (msec > 99 ? '' : (msec > 9 ? '0' : '00')),
                 msec.toString()
             )
-        case 10126:
+        case '10126':
             return ''.concat(
                 year.toString(),
                 '-',
@@ -1060,7 +1069,7 @@ function formatDate(date, format) {
                 (msec > 99 ? '' : (msec > 9 ? '0' : '00')),
                 msec.toString()
             )
-        case 104:
+        case '104':
             return ''.concat(
                 (day > 9 ? '' : '0'),
                 day.toString(),
@@ -1070,7 +1079,7 @@ function formatDate(date, format) {
                 '.',
                 year.toString()
             )
-        case 104108:
+        case '104108':
             return ''.concat(
                 (day > 9 ? '' : '0'),
                 day.toString(),
@@ -1089,7 +1098,7 @@ function formatDate(date, format) {
                 (second > 9 ? '' : '0'),
                 second.toString()
             )
-        case 1041082:
+        case '1041082':
             return ''.concat(
                 (day > 9 ? '' : '0'),
                 day.toString(),
@@ -1105,7 +1114,7 @@ function formatDate(date, format) {
                 (minute > 9 ? '' : '0'),
                 minute.toString(),
             )
-        case 1041083:
+        case '1041083':
             return ''.concat(
                 year.toString(),
                 '.',
@@ -1121,7 +1130,7 @@ function formatDate(date, format) {
                 (minute > 9 ? '' : '0'),
                 minute.toString(),
             )
-        case 1041084:
+        case '1041084':
             return ''.concat(
                 year.toString(),
                 '.',
@@ -1143,28 +1152,6 @@ function formatDate(date, format) {
         default:
             return undefined
     }
-}
-
-/**
- * Return string (length 3) with number day in year
- * @static
- * @param {any} [date] default = new Date()
- * @example
- * console.log(require('vv-shared').formatDayOfYear (require('vv-shared').toDate('20200101'))) // return 001
- * console.log(require('vv-shared').formatDayOfYear (require('vv-shared').toDate('20200323'))) // return 083
- * console.log(require('vv-shared').formatDayOfYear (require('vv-shared').toDate('20200509'))) // return 130
- */
-function formatDayOfYear(date) {
-    let d = toDate(date, new Date())
-    let numDayPrepare = d.getTime() - new Date(d.getFullYear(), 0, 0).getTime()
-    let numDay = Math.floor(numDayPrepare / 86400000)
-    if (numDay < 10) {
-        return '00'.concat(numDay.toString())
-    }
-    if (numDay < 100) {
-        return '0'.concat(numDay.toString())
-    }
-    return numDay.toString()
 }
 
 /**

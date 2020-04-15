@@ -619,15 +619,30 @@ describe("formatDate", function() {
     })
 })
 
-describe("formatDayOfYear", function() {
+describe("formatDate - dy", function() {
     it('for "01.01.2019" return "001"', function() {
-        assert.equal(testing_lib.formatDayOfYear('20190101'), '001')
+        assert.equal(testing_lib.formatDate('20190101','dy'), '001')
     })
     it('for "01.04.2019" return "091"', function() {
-        assert.equal(testing_lib.formatDayOfYear('20190401'), '091')
+        assert.equal(testing_lib.formatDate('20190401','dy'), '091')
     })
     it('for "31.12.2019" return "365"', function() {
-        assert.equal(testing_lib.formatDayOfYear('20191231'), '365')
+        assert.equal(testing_lib.formatDate('20191231','dy'), '365')
+    })
+})
+
+describe("formatDate - sd", function() {
+    it('for "2020-04-15T00:00:00.000" return "00000"', function() {
+        assert.equal(testing_lib.formatDate('2020-04-15T00:00:00.000','sd'), '00000')
+    })
+    it('for "2020-04-15T00:01:01.000" return "00061"', function() {
+        assert.equal(testing_lib.formatDate('2020-04-15T00:01:01.000','sd'), '00061')
+    })
+    it('for "2020-04-15T01:59:59.000" return "07199"', function() {
+        assert.equal(testing_lib.formatDate('2020-04-15T01:59:59.000','sd'), '07199')
+    })
+    it('for "2020-04-15T23:59:59.000" return "86399"', function() {
+        assert.equal(testing_lib.formatDate('2020-04-15T23:59:59.000','sd'), '86399')
     })
 })
 
