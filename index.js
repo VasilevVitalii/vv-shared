@@ -1202,6 +1202,11 @@ function formatDate(date, format) {
  * @returns {Date}
  */
 function dateAdd(interval, value, date) {
+    let d = toDate(date)
+    if (isEmpty(d)) {
+        return undefined
+    }
+
     let v = toInt(value, 0)
     if (interval === 'second') {
         v = v * 1000
@@ -1214,7 +1219,7 @@ function dateAdd(interval, value, date) {
     } else {
         return toDate(date)
     }
-    return new Date(toDate(date, new Date()).getTime() + v)
+    return new Date(toDate(d).getTime() + v)
 }
 
 /**
