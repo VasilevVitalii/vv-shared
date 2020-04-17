@@ -1530,10 +1530,10 @@ function readdir_private(dir, options, callback) {
                 }
                 if (!isEmpty(stat)) {
                     if (stat.isDirectory()) {
-                        if ((options.mode === 'all' || options.mode === 'paths') && !files.some(f => equal(f.path, dir))) {
+                        if ((options.mode === 'all' || options.mode === 'paths')) {
                             files.push({
                                 file: undefined,
-                                path: dir,
+                                path: file_absolute,
                                 size_bytes: undefined,
                                 date_create: stat.birthtime,
                                 date_edit: stat.mtime
