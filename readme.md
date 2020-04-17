@@ -683,7 +683,7 @@ Recursive scan directory
 
 **Example**  
 ```js
-require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
+require('vv-shared').readdir(__dirname, undefined, (error, files) => {console.log(files)} )
 ```
 <a name="type_text_page_char"></a>
 

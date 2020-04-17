@@ -1487,7 +1487,7 @@ function text_page_byte (text, text_page_char_result) {
  * @param {type_readdir_options} [options]
  * @param {callback_readdir} callback
  * @example
- * require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
+ * require('vv-shared').readdir(__dirname, undefined, (error, files) => {console.log(files)} )
  */
 function readdir(dir, options, callback) {
     let already_send_callback = false
