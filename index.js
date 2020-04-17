@@ -1460,6 +1460,12 @@ function text_page_byte (text, text_page_char_result) {
     return result
 }
 
+
+/**
+ * @typedef type_readdir_options
+ * @property {'files'|'paths'|'all'} mode
+ */
+
 /**
  * @typedef type_readdir
  * @property {string} path
@@ -1478,13 +1484,21 @@ function text_page_byte (text, text_page_char_result) {
  * Recursive scan directory
  * @static
  * @param {string} dir
+ * @param {type_readdir_options} [options]
  * @param {callback_readdir} callback
  * @example
  * require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
  */
-function readdir(dir, callback) {
+function readdir(dir, options, callback) {
     let already_send_callback = false
-    readdir_private(dir, (error, files) => {
+    if (isEmpty(options)) {
+        options = {
+            mode: 'files'
+        }
+    } else {
+        if (isEmpty(options.mode)) options.mode = 'files'
+    }
+    readdir_private(dir, options, (error, files) => {
         if (already_send_callback) return
         already_send_callback = true
         callback(error, files)
@@ -1494,9 +1508,10 @@ function readdir(dir, callback) {
 /**
  * @private
  * @param {string} dir
+ * @param {type_readdir_options} options
  * @param {callback_readdir} callback
  */
-function readdir_private(dir, callback) {
+function readdir_private(dir, options, callback) {
     /** @type {type_readdir[]} */
     let files = []
 
@@ -1515,7 +1530,16 @@ function readdir_private(dir, callback) {
                 }
                 if (!isEmpty(stat)) {
                     if (stat.isDirectory()) {
-                        readdir_private(file_absolute, function(error, res) {
+                        if ((options.mode === 'all' || options.mode === 'paths') && !files.some(f => equal(f.path, dir))) {
+                            files.push({
+                                file: undefined,
+                                path: dir,
+                                size_bytes: undefined,
+                                date_create: stat.birthtime,
+                                date_edit: stat.mtime
+                            })
+                        }
+                        readdir_private(file_absolute, options, function(error, res) {
                             if (!isEmpty(error)) {
                                 callback(error, undefined)
                             }
@@ -1523,13 +1547,15 @@ function readdir_private(dir, callback) {
                             if (!--pending) callback(undefined, files)
                         })
                     } else if (stat.isFile()) {
-                        files.push({
-                            file: file_relative,
-                            path: dir,
-                            size_bytes: stat.size,
-                            date_create: stat.birthtime,
-                            date_edit: stat.mtime
-                        })
+                        if ((options.mode === 'all' || options.mode === 'files')) {
+                            files.push({
+                                file: file_relative,
+                                path: dir,
+                                size_bytes: stat.size,
+                                date_create: stat.birthtime,
+                                date_edit: stat.mtime
+                            })
+                        }
                         if (!--pending) callback(undefined, files)
                     }
                 }

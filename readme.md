@@ -111,7 +111,7 @@ console.log(vvs.toString(42))
 <dt><a href="#text_page_byte">text_page_byte(text, text_page_char_result)</a> ⇒ <code><a href="#type_text_page_byte">Array.&lt;type_text_page_byte&gt;</a></code></dt>
 <dd><p>Convert function text_page_char result to byte markup for fs.createReadStream(...)</p>
 </dd>
-<dt><a href="#readdir">readdir(dir, callback)</a></dt>
+<dt><a href="#readdir">readdir(dir, [options], callback)</a></dt>
 <dd><p>Recursive scan directory</p>
 </dd>
 </dl>
@@ -122,6 +122,8 @@ console.log(vvs.toString(42))
 <dt><a href="#type_text_page_char">type_text_page_char</a></dt>
 <dd></dd>
 <dt><a href="#type_text_page_byte">type_text_page_byte</a></dt>
+<dd></dd>
+<dt><a href="#type_readdir_options">type_readdir_options</a></dt>
 <dd></dd>
 <dt><a href="#type_readdir">type_readdir</a></dt>
 <dd></dd>
@@ -668,7 +670,7 @@ Convert function text_page_char result to byte markup for fs.createReadStream(..
 
 <a name="readdir"></a>
 
-## readdir(dir, callback)
+## readdir(dir, [options], callback)
 Recursive scan directory
 
 **Kind**: global function  
@@ -676,6 +678,7 @@ Recursive scan directory
 | Param | Type |
 | --- | --- |
 | dir | <code>string</code> | 
+| [options] | [<code>type\_readdir\_options</code>](#type_readdir_options) | 
 | callback | <code>callback\_readdir</code> | 
 
 **Example**  
@@ -706,6 +709,16 @@ require('vv-shared').readdir(__dirname, (error, files) => {console.log(files)} )
 | step | <code>number</code> | 
 | position_start | <code>number</code> | 
 | position_end | <code>number</code> | 
+
+<a name="type_readdir_options"></a>
+
+## type\_readdir\_options
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| mode | <code>&#x27;files&#x27;</code> \| <code>&#x27;paths&#x27;</code> \| <code>&#x27;all&#x27;</code> | 
 
 <a name="type_readdir"></a>
 
