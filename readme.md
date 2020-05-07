@@ -601,7 +601,7 @@ Search value by case insensitive property name in object
 | Param | Type | Description |
 | --- | --- | --- |
 | object | <code>any</code> | object for search |
-| property_name | <code>any</code> | case insensitive property name |
+| property_name | <code>string</code> \| <code>Array.&lt;string&gt;</code> | case insensitive property name |
 | [default_value] | <code>any</code> | return this value, if property not find |
 
 **Example**  

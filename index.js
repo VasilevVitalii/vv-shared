@@ -1274,7 +1274,7 @@ function findPropertyExistsInObject (object, property_name) {
  * Search value by case insensitive property name in object
  * @static
  * @param {any} object object for search
- * @param {any} property_name case insensitive property name
+ * @param {string|string[]} property_name case insensitive property name
  * @param {any} [default_value] return this value, if property not find
  * @returns {any} value or undefined
  * @example
@@ -1285,13 +1285,22 @@ function findPropertyExistsInObject (object, property_name) {
  * console.log(require('vv-shared').findPropertyValueInObject(undefined,'a')) // return undefined
  */
 function findPropertyValueInObject (object, property_name, default_value) {
-    let property = findPropertyInObject(object, property_name)
-    if (isEmpty(property)) return default_value
-    let t = typeof default_value
-    if (t === 'string') return toString(object[property],default_value)
-    if (t === 'number') return toFloat(object[property],default_value)
-    if (t === 'boolean') return toBool(object[property],default_value)
-    return object[property]
+    let property_name_list = toArray(property_name, 'string')
+    let property_name_list_len = property_name_list.length
+    let object_for_find = object
+    for (let i = 0; i < property_name_list_len; i++) {
+        let property = findPropertyInObject(object_for_find, property_name_list[i])
+        if (isEmpty(property)) return default_value
+        if (property_name_list_len > i + 1) {
+            object_for_find = object_for_find[property]
+            continue
+        }
+        let t = typeof default_value
+        if (t === 'string') return toString(object_for_find[property],default_value)
+        if (t === 'number') return toFloat(object_for_find[property],default_value)
+        if (t === 'boolean') return toBool(object_for_find[property],default_value)
+        return object_for_find[property]
+    }
 }
 
 /**
