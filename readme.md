@@ -87,6 +87,9 @@ console.log(vvs.toString(42))
 <dt><a href="#formatDate">formatDate(date, format)</a> ⇒ <code>string</code></dt>
 <dd><p>Format date to string</p>
 </dd>
+<dt><a href="#cutFromArray">cutFromArray(arr, index)</a> ⇒ <code>Array.&lt;Object&gt;</code></dt>
+<dd><p>return array without one element - cut it (analog slice), but the original array does not change</p>
+</dd>
 <dt><a href="#dateAdd">dateAdd(interval, value, date)</a> ⇒ <code>Date</code></dt>
 <dd><p>increase (or decrease) date by second or minutes or hours or days</p>
 </dd>
@@ -543,6 +546,18 @@ Format date to string
 ```js
 console.log(require('vv-shared').formatDate(new Date(),126)) // return current date as string in format yyyy-mm-ddThh:mi:ss.mmmconsole.log(require('vv-shared').formatDate(new Date(),112)) // return current date as string in format yyyymmdd
 ```
+<a name="cutFromArray"></a>
+
+## cutFromArray(arr, index) ⇒ <code>Array.&lt;Object&gt;</code>
+return array without one element - cut it (analog slice), but the original array does not change
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| arr | <code>Array.&lt;Object&gt;</code> | 
+| index | <code>number</code> | 
+
 <a name="dateAdd"></a>
 
 ## dateAdd(interval, value, date) ⇒ <code>Date</code>

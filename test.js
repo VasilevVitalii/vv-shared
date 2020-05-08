@@ -646,6 +646,21 @@ describe("formatDate - sd", function() {
     })
 })
 
+describe("cutFromArray", function() {
+    it('for ["1","2","3"], 0 return ["2","3"]', function() {
+        assert.equal(testing_lib.cutFromArray(["1","2","3"],0).join(), ["2","3"].join())
+    })
+    it('for ["1","2","3"], 1 return ["1","3"]', function() {
+        assert.equal(testing_lib.cutFromArray(["1","2","3"],1).join(), ["1","3"].join())
+    })
+    it('for ["1","2","3"], 2 return ["1","2"]', function() {
+        assert.equal(testing_lib.cutFromArray(["1","2","3"],2).join(), ["1","2"].join())
+    })
+    it('for ["1","2","3"], 3 return ["1","2","3"]', function() {
+        assert.equal(testing_lib.cutFromArray(["1","2","3"],3).join(), ["1","2","3"].join())
+    })
+})
+
 describe("findPropertyInObject", function() {
     it('for ({a: 1, XXX: 2},"xxx") return "XXX"', function() {
         assert.equal(testing_lib.findPropertyInObject({a: 1, XXX: 2},"xxx"), "XXX")

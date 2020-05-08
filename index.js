@@ -29,6 +29,8 @@ exports.format=format
 exports.formatExt=formatExt
 exports.formatDate=formatDate
 
+exports.cutFromArray=cutFromArray
+
 exports.dateAdd = dateAdd
 
 exports.findPropertyInObject=findPropertyInObject
@@ -1191,6 +1193,21 @@ function formatDate(date, format) {
         default:
             return undefined
     }
+}
+
+/**
+ * return array without one element - cut it (analog slice), but the original array does not change
+ * @static
+ * @param {Object[]} arr
+ * @param {number} index
+ * @returns {Object[]}
+ */
+function cutFromArray(arr, index) {
+    if (isEmpty(arr) || !Array.isArray(arr)) return arr
+    let i = toInt(index)
+    if (i < 0) return arr
+    if (i >= arr.length) return arr
+    return arr.slice(0, i).concat(arr.slice(i + 1,arr.length))
 }
 
 /**
