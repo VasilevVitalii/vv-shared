@@ -40,12 +40,14 @@ exports.findPropertyValueInObject=findPropertyValueInObject
 exports.border_add = border_add
 exports.border_del = border_del
 
+exports.parser = parser
 exports.text_page_char = text_page_char
 exports.text_page_byte = text_page_byte
 exports.readdir = readdir
 
 const fs = require('fs')
 const path = require('path')
+const lib_parser = require('./parser.js')
 const REGEX_INT=/^[+\-]?\d+$/
 const REGEX_FLOAT=/^[+-]?\d+(\.\d+)?$/
 const REGEX_IP=/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
@@ -1379,6 +1381,28 @@ function border_del(string_where_find, left, right) {
     }
 
     return s
+}
+
+/**
+ * @typedef {lib_parser.type_options} parser_options
+ */
+/**
+ * Simple parser for, example, js code or sql code
+ * @param {parser_options} parser_options
+ * @returns {lib_parser}
+ * @example
+ * let parser = require('./index.js').parser({ brackets: {left: '(', right: ')'}, end_of_command: [';'], string_border: ['"', "'"], one_string_comment: "//"})
+ * let text = [
+ *     'let a = "hello!"  // i am comment',
+ *     'let b = (2 + 3) * 5'
+ * ].join(require('os').EOL)
+ *
+ * let a = parser.remove_comment(text)
+ * let b = parser.lexemify_plain(text)
+ * let c = parser.lexemify_tree(text)
+ */
+function parser(parser_options) {
+    return new lib_parser(parser_options)
 }
 
 /**

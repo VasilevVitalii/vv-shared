@@ -108,6 +108,9 @@ console.log(vvs.toString(42))
 <dt><a href="#border_del">border_del(string_where_find, [left], [right])</a> ⇒ <code>string</code></dt>
 <dd><p>For left and right in string remove border string, if border not exists</p>
 </dd>
+<dt><a href="#parser">parser(parser_options)</a> ⇒ <code>lib_parser</code></dt>
+<dd><p>Simple parser for, example, js code or sql code</p>
+</dd>
 <dt><a href="#text_page_char">text_page_char(text, page_size)</a> ⇒ <code><a href="#type_text_page_char">Array.&lt;type_text_page_char&gt;</a></code></dt>
 <dd><p>Text pagination by char count per one page</p>
 </dd>
@@ -125,6 +128,8 @@ console.log(vvs.toString(42))
 <dt><a href="#type_text_page_char">type_text_page_char</a></dt>
 <dd></dd>
 <dt><a href="#type_text_page_byte">type_text_page_byte</a></dt>
+<dd></dd>
+<dt><a href="#parser_options">parser_options</a> : <code>lib_parser.type_options</code></dt>
 <dd></dd>
 <dt><a href="#type_readdir_options">type_readdir_options</a></dt>
 <dd></dd>
@@ -659,6 +664,21 @@ For left and right in string remove border string, if border not exists
 ```js
 console.log(require('vv-shared').border_del('aaa','[',']')) // return 'aaa'console.log(require('vv-shared').border_del('[aaa]','[',']')) // return 'aaa'console.log(require('vv-shared').border_del(42,'[',']')) // return '42'console.log(require('vv-shared').border_del('b','*',undefined)) // return 'b'console.log(require('vv-shared').border_del('*b','*',undefined)) // return 'b'console.log(require('vv-shared').border_del(undefined,'[',']')) // return empty string
 ```
+<a name="parser"></a>
+
+## parser(parser_options) ⇒ <code>lib\_parser</code>
+Simple parser for, example, js code or sql code
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| parser_options | [<code>parser\_options</code>](#parser_options) | 
+
+**Example**  
+```js
+let parser = require('./index.js').parser({ brackets: {left: '(', right: ')'}, end_of_command: [';'], string_border: ['"', "'"], one_string_comment: "//"})let text = [    'let a = "hello!"  // i am comment',    'let b = (2 + 3) * 5'].join(require('os').EOL)let a = parser.remove_comment(text)let b = parser.lexemify_plain(text)let c = parser.lexemify_tree(text)
+```
 <a name="text_page_char"></a>
 
 ## text\_page\_char(text, page_size) ⇒ [<code>Array.&lt;type\_text\_page\_char&gt;</code>](#type_text_page_char)
@@ -725,6 +745,10 @@ require('vv-shared').readdir(__dirname, undefined, (error, files) => {console.lo
 | position_start | <code>number</code> | 
 | position_end | <code>number</code> | 
 
+<a name="parser_options"></a>
+
+## parser\_options : <code>lib\_parser.type\_options</code>
+**Kind**: global typedef  
 <a name="type_readdir_options"></a>
 
 ## type\_readdir\_options
