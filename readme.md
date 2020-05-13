@@ -399,7 +399,7 @@ Convert object to array, use for function params like {string|string[]}
 
 | Param | Type | Description |
 | --- | --- | --- |
-| value | <code>any</code> | object for convert |
+| value | <code>any</code> \| <code>Array.&lt;any&gt;</code> | object for convert |
 | [type] | <code>&#x27;string&#x27;</code> \| <code>&#x27;int&#x27;</code> \| <code>&#x27;float&#x27;</code> \| <code>&#x27;bool&#x27;</code> \| <code>&#x27;guid&#x27;</code> \| <code>&#x27;date&#x27;</code> |  |
 
 <a name="toCharArray"></a>

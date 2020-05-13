@@ -659,7 +659,7 @@ function toIp(value, default_value) {
 /**
  * Convert object to array, use for function params like {string|string[]}
  * @static
- * @param {any} value object for convert
+ * @param {any|any[]} value object for convert
  * @param {'string'|'int'|'float'|'bool'|'guid'|'date'} [type]
  * @returns {Object[]}
  */
