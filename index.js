@@ -706,7 +706,7 @@ function toArray(value, type) {
             }
         default:
             if (Array.isArray(value)) {
-                return value
+                return value.filter(f => !isEmpty(f))
             } else {
                 return [value].filter(f => !isEmpty(f))
             }
