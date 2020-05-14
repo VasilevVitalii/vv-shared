@@ -34,73 +34,35 @@ class Parser {
         /** @type {type_options} */
         let o = vvs.isEmpty(options) ? {} : options
 
-        /** @type {string[]} */
-        let string_border = []
-        vvs.toArray(o.string_border, 'string').filter(f => !vvs.isEmptyString(f)).forEach(item => {
-            if (item.length > 1) {
-                throw new Error(vvs.format('bad string border "{0}": len must be 1 char', item))
-            }
-            if (string_border.some(f => vvs.equal(f, item))) {
-                throw new Error(vvs.format('bad string border "{0}": this value already exists', item))
-            }
-            string_border.push(item)
-        })
+        let string_border = vvs.toArray(o.string_border, 'string').filter(f => !vvs.isEmptyString(f))
+        let end_of_command = vvs.toArray(o.end_of_command, 'string').filter(f => !vvs.isEmptyString(f))
+        let brackets = vvs.toArray(o.brackets).filter(f => !vvs.isEmpty(f) && !vvs.isEmptyString(f.left) && !vvs.isEmptyString(f.right)).map(m => { return {left: vvs.toString(m.left), right: vvs.toString(m.right)} })
+        let one_string_comment = vvs.toString(o.one_string_comment, '')
 
-        /** @type {string[]} */
-        let end_of_command = []
-        vvs.toArray(o.end_of_command, 'string').filter(f => !vvs.isEmptyString(f)).forEach(item => {
-            if (item.length > 1) {
-                throw new Error(vvs.format('bad end of command "{0}": len must be 1 char', item))
-            }
-            if (end_of_command.some(f => vvs.equal(f, item))) {
-                throw new Error(vvs.format('bad end of command "{0}": this value already exists', item))
-            }
-            end_of_command.push(item)
-        })
+        let all_lexems = [].concat(
+            string_border,
+            end_of_command,
+            [one_string_comment].filter(f => !vvs.isEmptyString(f)),
+            brackets.map(m => { return m.left }),
+            brackets.map(m => { return m.right }),
+        )
 
-        /** @type {type_options_bracket[]} */
-        let brackets = []
-        vvs.toArray(o.brackets).filter(f => !vvs.isEmpty(f)).forEach(item => {
-            if (vvs.isEmptyString(item.left)) {
-                throw new Error(vvs.format('bad brackets: left bracket is empty'))
-            }
-            if (vvs.isEmptyString(item.right)) {
-                throw new Error(vvs.format('bad brackets: right bracket is empty'))
-            }
-            if (item.left.length > 1) {
-                throw new Error(vvs.format('bad brackets "{0} {1}": left bracket len must be 1 char', [item.left, item.right]))
-            }
-            if (item.right.length > 1) {
-                throw new Error(vvs.format('bad brackets "{0} {1}": right bracket len must be 1 char', [item.left, item.right]))
-            }
-            if (vvs.equal(item.left, item.right)) {
-                throw new Error(vvs.format('bad brackets "{0} {1}": left and right brackets are equal', [item.left, item.right]))
-            }
-            if (brackets.some(f => vvs.equal(f.left, item.left))) {
-                throw new Error(vvs.format('bad brackets "{0} {1}": this value (left bracket) already exists', [item.left, item.right]))
-            }
-            if (brackets.some(f => vvs.equal(f.left, item.right))) {
-                throw new Error(vvs.format('bad brackets "{0} {1}": this value (left bracket) already exists', [item.left, item.right]))
-            }
-            if (brackets.some(f => vvs.equal(f.right, item.right))) {
-                throw new Error(vvs.format('bad brackets "{0} {1}": this value (right bracket) already exists', [item.left, item.right]))
-            }
-            if (brackets.some(f => vvs.equal(f.right, item.left))) {
-                throw new Error(vvs.format('bad brackets "{0} {1}": this value (right bracket) already exists', [item.left, item.right]))
-            }
-            brackets.push(item)
-        })
+        let doubles_in_lexems = vvs.duplicates(all_lexems)
+        if (doubles_in_lexems.length > 0) {
+            throw new Error(vvs.format('lexem(s) "{0}" occur more than once', doubles_in_lexems.join('", "') ))
+        }
+
+        let long_lexems = all_lexems.filter(f => f.length > 1 && !vvs.equal(f, one_string_comment))
+        if (long_lexems.length > 0) {
+            throw new Error(vvs.format('lexem(s) "{0}" too long, permissible maximum length = 1 char', long_lexems.join('", "') ))
+        }
 
         this.options = {
             string_border: string_border,
             end_of_command: end_of_command,
-            one_string_comment: vvs.toString(o.one_string_comment),
+            one_string_comment: one_string_comment,
             brackets: brackets,
-            important_char: char => {
-                return  brackets.some(f => f.left === char || f.right === char) ||
-                        end_of_command.includes(char) ||
-                        string_border.includes(char)
-            }
+            all_lexems: all_lexems
         }
     }
 
@@ -167,7 +129,7 @@ class Parser {
             text = vvs.border_add(text, undefined, this.options.end_of_command[0])
         }
 
-        let eol_to_space = !this.options.important_char(os.EOL)
+        let eol_to_space = !this.options.all_lexems.includes(os.EOL)
 
         for (let i = 0; i < text.length; i++) {
             let char = text[i]
@@ -176,7 +138,7 @@ class Parser {
             //maybe escape symb?
             if (char === '\\') {
                 let next_char = (text.length > i + 1 ? text[i + 1] : undefined)
-                if (!vvs.isEmpty(next_char) && this.options.important_char(next_char)) {
+                if (!vvs.isEmpty(next_char) && this.options.all_lexems.includes(next_char)) {
                     line = line.concat(next_char)
                     i++
                 } else {

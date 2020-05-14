@@ -677,7 +677,7 @@ Simple parser for, example, js code or sql code
 
 **Example**  
 ```js
-let parser = require('./index.js').parser({ brackets: {left: '(', right: ')'}, end_of_command: [';'], string_border: ['"', "'"], one_string_comment: "//"})let text = [    'let a = "hello!"  // i am comment',    'let b = (2 + 3) * 5'].join(require('os').EOL)let a = parser.remove_comment(text)let b = parser.lexemify_plain(text)let c = parser.lexemify_tree(text)
+let parser = require('vv-shared').parser({ brackets: {left: '(', right: ')'}, end_of_command: [';'], string_border: ['"', "'"], one_string_comment: "//"})let text = [    'let a = "hello!"  // i am comment',    'let b = (2 + 3) * 5'].join(require('os').EOL)let a = parser.remove_comment(text)let b = parser.lexemify_plain(text)let c = parser.lexemify_tree(text)
 ```
 <a name="text_page_char"></a>
 

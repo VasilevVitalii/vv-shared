@@ -1391,7 +1391,7 @@ function border_del(string_where_find, left, right) {
  * @param {parser_options} parser_options
  * @returns {lib_parser}
  * @example
- * let parser = require('./index.js').parser({ brackets: {left: '(', right: ')'}, end_of_command: [';'], string_border: ['"', "'"], one_string_comment: "//"})
+ * let parser = require('vv-shared').parser({ brackets: {left: '(', right: ')'}, end_of_command: [';'], string_border: ['"', "'"], one_string_comment: "//"})
  * let text = [
  *     'let a = "hello!"  // i am comment',
  *     'let b = (2 + 3) * 5'
