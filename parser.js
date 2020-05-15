@@ -19,8 +19,12 @@ const vvs = require('./index.js')
  */
 
 /**
+ * @typedef {'lexem'|'brackets'|'string'|'command'} type_lexem_type
+ */
+
+/**
  * @typedef type_lexem
- * @property {'final'|'child'} type
+ * @property {type_lexem_type} type
  * @property {string} [final]
  * @property {type_lexem[]} [child]
  */
@@ -251,44 +255,6 @@ class Parser {
  * @param {type_lexem[]} [result]
  * @param {number} depth
  */
-function tree_command(text, parser, result, depth) {
-    if (!vvs.isEmpty(depth)) {
-        depth--
-    }
-    let plain = parser.lexemify_plain(text)
-    /** @type {type_lexem[]} */
-    let commands = []
-
-
-    // plain.forEach((item, idx_item) => {
-    //     if (vvs.isEmptyString(item)) return
-
-    //     if (!vvs.isEmpty(depth) && depth < 0) {
-    //         result.push({type: 'final', final: item})
-    //         return
-    //     }
-
-    //     let end_of_command = parser.options.end_of_command.find(f => vvs.equal(f, item[0]))
-    //     if (vvs.isEmpty(fnd_bracked)) {
-    //         result.push({type: 'final', final: item})
-    //         return
-    //     }
-
-    //     result.push({
-    //         type: "bracked",
-    //         child: []
-    //     })
-
-    //     tree_bracked(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
-    // })
-}
-
-/**
- * @param {string} text
- * @param {Parser} parser
- * @param {type_lexem[]} [result]
- * @param {number} depth
- */
 function tree_bracked(text, parser, result, depth) {
     if (!vvs.isEmpty(depth)) {
         depth--
@@ -296,25 +262,74 @@ function tree_bracked(text, parser, result, depth) {
     let plain = parser.lexemify_plain(text)
     plain.forEach((item, idx_item) => {
         if (vvs.isEmptyString(item)) return
+        item = item.trim()
 
         if (!vvs.isEmpty(depth) && depth < 0) {
-            result.push({type: 'final', final: item})
+            result.push({type: 'lexem', final: item})
             return
         }
 
-        let fnd_bracked = parser.options.brackets.find(f => vvs.equal(f.left, item[0]))
-        if (vvs.isEmpty(fnd_bracked)) {
-            result.push({type: 'final', final: item})
-            return
+        switch (lexem_type(item, parser)) {
+            case "lexem":
+                result.push({type: 'lexem', final: item})
+                break
+            case "command":
+                result.push({type: 'command', final: item})
+                break
+            case 'string':
+                result.push({type: 'string', final: item.substring(1, item.length - 1)})
+                break
+            case 'brackets':
+                result.push({
+                    type: "brackets",
+                    child: []
+                })
+            tree_bracked(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
         }
 
-        result.push({
-            type: "child",
-            child: []
-        })
 
-        tree_bracked(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
+        // let fnd_bracked = parser.options.brackets.find(f => vvs.equal(f.left, item[0]))
+        // if (vvs.isEmpty(fnd_bracked)) {
+        //     result.push({type: 'lexem', final: item})
+        //     return
+        // }
+
+        // result.push({
+        //     type: "child",
+        //     child: []
+        // })
+
+        // tree_bracked(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
     })
+}
+
+// /**
+//  * @typedef type_options
+//  * @property {string|string[]} [string_border] example "'", '"'
+//  * @property {string|string[]} [end_of_command] exampe ";"
+//  * @property {string} [one_string_comment] exampe "//"
+//  * @property {type_options_bracket|type_options_bracket[]} [brackets] example left = '(', right = ')'
+//  */
+
+/**
+ * @param {string} text
+ * @param {Parser} parser
+ * @returns {type_lexem_type}
+ */
+function lexem_type(text, parser) {
+    if (vvs.isEmptyString(text)) return 'lexem'
+    if (parser.options.end_of_command.some(f => vvs.equal(f, text))) {
+        return 'command'
+    }
+    let t_first = text.substring(0, 1)
+    let t_last = text.substring(text.length - 1, text.length)
+    if (vvs.equal(t_first, t_last) && parser.options.string_border.some(f => vvs.equal(f, t_first))) {
+        return 'string'
+    }
+    if (parser.options.brackets.some(f => vvs.equal(f.left, t_first) && vvs.equal(f.right, t_last))) {
+        return 'brackets'
+    }
+    return 'lexem'
 }
 
 module.exports = Parser
