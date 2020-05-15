@@ -20,7 +20,7 @@ const vvs = require('./index.js')
 
 /**
  * @typedef type_lexem
- * @property {'final'|'bracked'|'command'} type
+ * @property {'final'|'child'} type
  * @property {string} [final]
  * @property {type_lexem[]} [child]
  */
@@ -309,7 +309,7 @@ function tree_bracked(text, parser, result, depth) {
         }
 
         result.push({
-            type: "bracked",
+            type: "child",
             child: []
         })
 
