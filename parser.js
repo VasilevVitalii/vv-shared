@@ -20,7 +20,7 @@ const vvs = require('./index.js')
 
 /**
  * @typedef type_lexem
- * @property {'final'|'child'} type
+ * @property {'final'|'bracked'|'command'} type
  * @property {string} [final]
  * @property {type_lexem[]} [child]
  */
@@ -202,7 +202,17 @@ class Parser {
                 }
             }
 
-            if (opening_bracked.length <= 0 && opening_string.length <= 0 && (char === ' ' || this.options.end_of_command.some(f => vvs.equal(f, char)))) {
+            //processing end of command
+            if (opening_bracked.length <= 0 && opening_string.length <= 0 && this.options.end_of_command.some(f => vvs.equal(f, char))) {
+                if (!vvs.isEmptyString(line)) {
+                    result.push(line)
+                    line = ''
+                }
+                result.push(char)
+                continue
+            }
+
+            if (opening_bracked.length <= 0 && opening_string.length <= 0 && char === ' ') {
                 if (!vvs.isEmptyString(line)) {
                     result.push(line)
                     line = ''
@@ -230,7 +240,7 @@ class Parser {
     lexemify_tree(text, depth) {
         /** @type {type_lexem[]} */
         let result = []
-        tree(text, this, result, vvs.toInt(depth))
+        tree_bracked(text, this, result, vvs.toInt(depth))
         return result
     }
 }
@@ -241,12 +251,50 @@ class Parser {
  * @param {type_lexem[]} [result]
  * @param {number} depth
  */
-function tree(text, parser, result, depth) {
+function tree_command(text, parser, result, depth) {
     if (!vvs.isEmpty(depth)) {
         depth--
     }
     let plain = parser.lexemify_plain(text)
-    plain.forEach(item => {
+    /** @type {type_lexem[]} */
+    let commands = []
+
+
+    // plain.forEach((item, idx_item) => {
+    //     if (vvs.isEmptyString(item)) return
+
+    //     if (!vvs.isEmpty(depth) && depth < 0) {
+    //         result.push({type: 'final', final: item})
+    //         return
+    //     }
+
+    //     let end_of_command = parser.options.end_of_command.find(f => vvs.equal(f, item[0]))
+    //     if (vvs.isEmpty(fnd_bracked)) {
+    //         result.push({type: 'final', final: item})
+    //         return
+    //     }
+
+    //     result.push({
+    //         type: "bracked",
+    //         child: []
+    //     })
+
+    //     tree_bracked(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
+    // })
+}
+
+/**
+ * @param {string} text
+ * @param {Parser} parser
+ * @param {type_lexem[]} [result]
+ * @param {number} depth
+ */
+function tree_bracked(text, parser, result, depth) {
+    if (!vvs.isEmpty(depth)) {
+        depth--
+    }
+    let plain = parser.lexemify_plain(text)
+    plain.forEach((item, idx_item) => {
         if (vvs.isEmptyString(item)) return
 
         if (!vvs.isEmpty(depth) && depth < 0) {
@@ -261,11 +309,11 @@ function tree(text, parser, result, depth) {
         }
 
         result.push({
-            type: "child",
+            type: "bracked",
             child: []
         })
 
-        tree(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
+        tree_bracked(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
     })
 }
 
