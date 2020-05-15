@@ -1387,6 +1387,9 @@ function border_del(string_where_find, left, right) {
  * @typedef {lib_parser.type_options} parser_options
  */
 /**
+ * @typedef {lib_parser.type_lexem} parser_lexem
+ */
+/**
  * Simple parser for, example, js code or sql code
  * @param {parser_options} parser_options
  * @returns {lib_parser}

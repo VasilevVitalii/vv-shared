@@ -131,6 +131,8 @@ console.log(vvs.toString(42))
 <dd></dd>
 <dt><a href="#parser_options">parser_options</a> : <code>lib_parser.type_options</code></dt>
 <dd></dd>
+<dt><a href="#parser_lexem">parser_lexem</a> : <code>lib_parser.type_lexem</code></dt>
+<dd></dd>
 <dt><a href="#type_readdir_options">type_readdir_options</a></dt>
 <dd></dd>
 <dt><a href="#type_readdir">type_readdir</a></dt>
@@ -748,6 +750,10 @@ require('vv-shared').readdir(__dirname, undefined, (error, files) => {console.lo
 <a name="parser_options"></a>
 
 ## parser\_options : <code>lib\_parser.type\_options</code>
+**Kind**: global typedef  
+<a name="parser_lexem"></a>
+
+## parser\_lexem : <code>lib\_parser.type\_lexem</code>
 **Kind**: global typedef  
 <a name="type_readdir_options"></a>
 
