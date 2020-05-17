@@ -286,30 +286,8 @@ function tree_bracked(text, parser, result, depth) {
                 })
             tree_bracked(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
         }
-
-
-        // let fnd_bracked = parser.options.brackets.find(f => vvs.equal(f.left, item[0]))
-        // if (vvs.isEmpty(fnd_bracked)) {
-        //     result.push({type: 'lexem', final: item})
-        //     return
-        // }
-
-        // result.push({
-        //     type: "child",
-        //     child: []
-        // })
-
-        // tree_bracked(item.substring(1, item.length - 1), parser, result[result.length - 1].child, depth)
     })
 }
-
-// /**
-//  * @typedef type_options
-//  * @property {string|string[]} [string_border] example "'", '"'
-//  * @property {string|string[]} [end_of_command] exampe ";"
-//  * @property {string} [one_string_comment] exampe "//"
-//  * @property {type_options_bracket|type_options_bracket[]} [brackets] example left = '(', right = ')'
-//  */
 
 /**
  * @param {string} text
