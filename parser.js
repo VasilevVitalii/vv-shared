@@ -277,6 +277,38 @@ class Parser {
         })
         return result
     }
+
+    /**
+     * @param {type_lexem_type} type
+     * @param {type_lexem[]} lexems
+     * @returns {type_lexem}
+     * */
+    lexem_splice(type, lexems) {
+        if (vvs.isEmpty(type) || vvs.isEmpty(lexems)) {
+            return {
+                type: undefined,
+                final: undefined,
+                child: []
+            }
+        }
+
+        let idx = lexems.findIndex(f => vvs.equal(f.type, type))
+        if (idx < 0) {
+            return {
+                type: undefined,
+                final: undefined,
+                child: []
+            }
+        }
+        let result = lexems[idx]
+
+        if (type === 'brackets' && vvs.isEmpty(result.child)) {
+            result.child = []
+        }
+
+        lexems.splice(idx, 1)
+        return result
+    }
 }
 
 /**
