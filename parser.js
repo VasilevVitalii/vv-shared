@@ -247,6 +247,36 @@ class Parser {
         tree_bracked(text, this, result, vvs.toInt(depth))
         return result
     }
+
+    /**
+     * @param {type_lexem[]} lexems
+     * @returns {type_lexem[][]}
+     */
+    commandify_lexem_tree(lexems) {
+        if (vvs.isEmpty(lexems)) return []
+
+        /** @type {type_lexem[][]}*/
+        let result = []
+        /** @type {type_lexem[]}*/
+        let buffer = []
+        lexems.forEach((lexem, idx, arr) => {
+            if (lexem.type === 'command') {
+                if (buffer.length > 0) {
+                    result.push(buffer)
+                    buffer = []
+                }
+                return
+            }
+            buffer.push(lexem)
+
+            if (idx + 1 >= arr.length && buffer.length > 0) {
+                result.push(buffer)
+                buffer = []
+                return
+            }
+        })
+        return result
+    }
 }
 
 /**
