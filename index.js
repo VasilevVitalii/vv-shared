@@ -1390,7 +1390,7 @@ function border_del(string_where_find, left, right) {
  * @typedef {lib_parser.type_lexem} parser_lexem
  */
 /**
- * @typedef {'lexem'|'brackets'|'string'|'command'} parser_lexem_type
+ * @typedef {lib_parser.type_lexem_type} parser_lexem_type
  */
 
 /**

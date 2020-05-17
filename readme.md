@@ -133,7 +133,7 @@ console.log(vvs.toString(42))
 <dd></dd>
 <dt><a href="#parser_lexem">parser_lexem</a> : <code>lib_parser.type_lexem</code></dt>
 <dd></dd>
-<dt><a href="#parser_lexem_type">parser_lexem_type</a> : <code>&#x27;lexem&#x27;</code> | <code>&#x27;brackets&#x27;</code> | <code>&#x27;string&#x27;</code> | <code>&#x27;command&#x27;</code></dt>
+<dt><a href="#parser_lexem_type">parser_lexem_type</a> : <code>lib_parser.type_lexem_type</code></dt>
 <dd></dd>
 <dt><a href="#type_readdir_options">type_readdir_options</a></dt>
 <dd></dd>
@@ -759,7 +759,7 @@ require('vv-shared').readdir(__dirname, undefined, (error, files) => {console.lo
 **Kind**: global typedef  
 <a name="parser_lexem_type"></a>
 
-## parser\_lexem\_type : <code>&#x27;lexem&#x27;</code> \| <code>&#x27;brackets&#x27;</code> \| <code>&#x27;string&#x27;</code> \| <code>&#x27;command&#x27;</code>
+## parser\_lexem\_type : <code>lib\_parser.type\_lexem\_type</code>
 **Kind**: global typedef  
 <a name="type_readdir_options"></a>
 
