@@ -548,12 +548,8 @@ describe("format", function() {
     })
 
     objects.forEach(o => {
-        let title = ''.concat('for ',o.id,' as string and undefine in replace return empty string')
-        let result = ''
-        if (['string','number'].includes(o.id)) {
-            result = o.param.toString()
-            title = ''.concat('for ',o.id,' as string and undefine in replace return string')
-        }
+        let title = ''.concat('for ',o.id,' as string and undefine in replace return "', testing_lib.toString(o.param, ''), '"')
+        let result = testing_lib.toString(o.param, '')
         it(title, function() {
             assert.equal(testing_lib.format(o.param, undefined), result)
         })

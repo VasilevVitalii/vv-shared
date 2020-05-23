@@ -934,10 +934,10 @@ function replaceAll(string_where_find, find, replace, recursively) {
  * console.log(require('vv-shared').format(undefined,'x')) // return empty string
  */
 function format(string_for_format, replaces) {
-    if (!['string','number'].includes(typeof string_for_format) || isEmpty(string_for_format)) return ''
+    if (isEmpty(string_for_format) || isEmpty(replaces)) return toString(string_for_format,'')
 
-    let s = toString(string_for_format)
-    if (isEmpty(s)) return ''
+    let s = toString(string_for_format,'')
+    if (isEmptyString(s)) return s
 
     let r = []
     if (Array.isArray(replaces)) {
