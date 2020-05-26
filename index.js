@@ -40,14 +40,17 @@ exports.findPropertyValueInObject=findPropertyValueInObject
 exports.border_add = border_add
 exports.border_del = border_del
 
+const lib_parser = require('./parser.js')
+const lib_paraco = require('./paraco.js')
+
 exports.parser = parser
+exports.paraco = lib_paraco
 exports.text_page_char = text_page_char
 exports.text_page_byte = text_page_byte
 exports.readdir = readdir
 
 const fs = require('fs')
 const path = require('path')
-const lib_parser = require('./parser.js')
 const REGEX_INT=/^[+\-]?\d+$/
 const REGEX_FLOAT=/^[+-]?\d+(\.\d+)?$/
 const REGEX_IP=/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
