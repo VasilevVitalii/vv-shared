@@ -1323,6 +1323,11 @@ function findPropertyValueInObject (object, property_name, default_value) {
         if (t === 'number') return toFloat(object_for_find[property],default_value)
         if (t === 'boolean') return toBool(object_for_find[property],default_value)
         if (t === 'object' && isDate(default_value)) return toDate(object_for_find[property],default_value)
+        if (t === 'object' && Buffer.isBuffer(default_value)) {
+            let buff = object_for_find[property]
+            if (Buffer.isBuffer(buff)) return buff
+            return default_value
+        }
         return object_for_find[property]
     }
 }
