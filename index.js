@@ -51,6 +51,7 @@ exports.readdir = readdir
 
 const fs = require('fs')
 const path = require('path')
+const { isDate } = require('util')
 const REGEX_INT=/^[+\-]?\d+$/
 const REGEX_FLOAT=/^[+-]?\d+(\.\d+)?$/
 const REGEX_IP=/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
@@ -1321,6 +1322,7 @@ function findPropertyValueInObject (object, property_name, default_value) {
         if (t === 'string') return toString(object_for_find[property],default_value)
         if (t === 'number') return toFloat(object_for_find[property],default_value)
         if (t === 'boolean') return toBool(object_for_find[property],default_value)
+        if (t === 'object' && isDate(default_value)) return toDate(object_for_find[property],default_value)
         return object_for_find[property]
     }
 }
