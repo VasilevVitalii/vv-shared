@@ -117,6 +117,9 @@ console.log(vvs.toString(42))
 <dt><a href="#text_page_byte">text_page_byte(text, text_page_char_result)</a> ⇒ <code><a href="#type_text_page_byte">Array.&lt;type_text_page_byte&gt;</a></code></dt>
 <dd><p>Convert function text_page_char result to byte markup for fs.createReadStream(...)</p>
 </dd>
+<dt><a href="#guid">guid()</a></dt>
+<dd><p>Generate NON-UNIQUE guid by very-sery simple idea, based only on Math.random()</p>
+</dd>
 <dt><a href="#readdir">readdir(dir, [options], callback)</a></dt>
 <dd><p>Recursive scan directory</p>
 </dd>
@@ -707,6 +710,12 @@ Convert function text_page_char result to byte markup for fs.createReadStream(..
 | text | <code>string</code> | 
 | text_page_char_result | [<code>Array.&lt;type\_text\_page\_char&gt;</code>](#type_text_page_char) | 
 
+<a name="guid"></a>
+
+## guid()
+Generate NON-UNIQUE guid by very-sery simple idea, based only on Math.random()
+
+**Kind**: global function  
 <a name="readdir"></a>
 
 ## readdir(dir, [options], callback)

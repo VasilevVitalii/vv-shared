@@ -47,6 +47,7 @@ exports.parser = parser
 exports.paraco = lib_paraco
 exports.text_page_char = text_page_char
 exports.text_page_byte = text_page_byte
+exports.guid = guid
 exports.readdir = readdir
 
 const fs = require('fs')
@@ -1527,12 +1528,42 @@ function text_page_byte (text, text_page_char_result) {
     return result
 }
 
+function random16() {
+    let r = Math.random()
+    if (r <= 0.0625) return '0'
+    if (r <= 0.125) return '1'
+    if (r <= 0.1875) return '2'
+    if (r <= 0.25) return '3'
+    if (r <= 0.3125) return '4'
+    if (r <= 0.375) return '5'
+    if (r <= 0.4375) return '6'
+    if (r <= 0.5) return '7'
+    if (r <= 0.5625) return '8'
+    if (r <= 0.625) return '9'
+    if (r <= 0.6875) return 'A'
+    if (r <= 0.75) return 'B'
+    if (r <= 0.8125) return 'C'
+    if (r <= 0.875) return 'D'
+    if (r <= 0.9375) return 'E'
+    return 'F'
+}
+
+/**
+ * Generate NON-UNIQUE guid by very-sery simple idea, based only on Math.random()
+ */
+function guid() {
+    return format('{0}{1}{2}{3}{4}{5}{6}{7}-{0}{9}{10}{11}-0{12}{13}{14}-{15}{16}{17}{18}-{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}', [
+        random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(),
+        random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(),
+        random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(),
+        random16(), random16()
+    ])
+}
 
 /**
  * @typedef type_readdir_options
  * @property {'files'|'paths'|'all'} mode
  */
-
 /**
  * @typedef type_readdir
  * @property {string} path
