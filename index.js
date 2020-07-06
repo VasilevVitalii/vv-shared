@@ -1599,7 +1599,20 @@ function readdir(dir, options, callback) {
     readdir_private(dir, options, (error, files) => {
         if (already_send_callback) return
         already_send_callback = true
-        callback(error, files)
+        callback(
+            error,
+            isEmpty(files) || !Array.isArray(files) ? undefined : files.sort((a,b) => {
+                if (a.path < b.path) return -1
+                if (a.path > b.path) return 1
+                let e_a = isEmptyString(a)
+                let e_b = isEmptyString(b)
+                if (e_a && !e_b) return -1
+                if (!e_a && e_b) return 1
+                if (a.file < b.file) return -1
+                if (a.file > b.file) return 1
+                return 0
+            })
+        )
     })
 }
 
