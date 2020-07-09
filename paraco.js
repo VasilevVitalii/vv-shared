@@ -46,8 +46,8 @@ function from_text(text, options) {
         throw new Error ('paragraph_prefix is empty')
     }
 
-    let items1 = text.split(os.EOL)
-    let items2 = vvs.isEmptyString(one_string_comment) ? [...items1] : new lib_parser({one_string_comment: one_string_comment}).remove_comment(text).split(os.EOL)
+    let items1 = text.split('\n')
+    let items2 = vvs.isEmptyString(one_string_comment) ? [...items1] : new lib_parser({one_string_comment: one_string_comment}).remove_comment(text).split('\n')
 
     /** @type {string} */
     let current_paragraph = undefined
@@ -55,8 +55,6 @@ function from_text(text, options) {
     let current_paragraph_description = undefined
     /** @type {string[]} */
     let current_text = []
-
-    let len = items2.length
 
     items2.forEach((item, idx) => {
         let paragraph_maybe = item.trim()
@@ -85,27 +83,3 @@ function from_text(text, options) {
 
     return result
 }
-
-// class Paraco {
-
-//     /**
-//      * @param {type_options} options
-//      */
-//     constructor(options) {
-//         /** @type {type_options} */
-//         let o = vvs.isEmpty(options) ? {paragraph_prefix: undefined} : options
-
-//         let paragraph_prefix = vvs.toString(o.paragraph_prefix, '')
-//         if (vvs.isEmptyString(paragraph_prefix)) {
-//             throw new Error ('paragraph_prefix is empty')
-//         }
-//         let one_string_comment = vvs.toString(o.one_string_comment, '')
-
-//         this.options = {
-//             paragraph_prefix: paragraph_prefix,
-//             one_string_comment: one_string_comment
-//         }
-//     }
-// }
-
-// module.exports = Paraco
