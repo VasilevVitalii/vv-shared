@@ -75,7 +75,7 @@ class Parser {
     remove_comment(text) {
         if (vvs.isEmptyString(text) || vvs.isEmptyString(this.options.one_string_comment)) return text
         let text_without_comment = []
-        text.split(os.EOL).forEach(line => {
+        text.split('\n').forEach(line => {
             let sublines = line.split(this.options.one_string_comment)
             if (sublines.length <= 1) {
                 text_without_comment.push(line)
