@@ -53,6 +53,13 @@ exports.readdir = readdir
 const fs = require('fs')
 const path = require('path')
 const { isDate } = require('util')
+
+
+//########## Don't remove this three commens!!!! ##########
+//########## BORDER_FOR_PACKET_VV_GUI #####################
+//########## Don't remove this three commens!!!! ##########
+
+
 const REGEX_INT=/^[+\-]?\d+$/
 const REGEX_FLOAT=/^[+-]?\d+(\.\d+)?$/
 const REGEX_IP=/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
