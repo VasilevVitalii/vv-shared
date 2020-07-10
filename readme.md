@@ -69,6 +69,9 @@ console.log(vvs.toString(42))
 <dt><a href="#toErrorMessage">toErrorMessage(error, [prefix], [replaces], [sourсe])</a> ⇒ <code>string</code></dt>
 <dd><p>Returns a nice formatted error message - wrapper for function format()</p>
 </dd>
+<dt><a href="#toHtml">toHtml(value)</a> ⇒ <code>string</code></dt>
+<dd><p>Return string for inject in html</p>
+</dd>
 <dt><a href="#split">split(string_for_split, left, right, [collapse_doubles])</a> ⇒ <code>Array.&lt;string&gt;</code></dt>
 <dd><p>split string, for example - &#39;{asasdas}{234235}{}{vcvc}&#39;, and return array [&#39;asasdas&#39;,&#39;234235&#39;,&#39;&#39;,&#39;vcvc&#39;]</p>
 </dd>
@@ -450,6 +453,17 @@ Returns a nice formatted error message - wrapper for function format()
 ```js
 try {throw new Error('ops')} catch (error) {throw require('vv-shared').toErrorMessage(error, 'in myFunction({0})','value')}
 ```
+<a name="toHtml"></a>
+
+## toHtml(value) ⇒ <code>string</code>
+Return string for inject in html
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| value | <code>string</code> | 
+
 <a name="split"></a>
 
 ## split(string_for_split, left, right, [collapse_doubles]) ⇒ <code>Array.&lt;string&gt;</code>

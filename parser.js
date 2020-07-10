@@ -2,8 +2,6 @@
 const os = require('os')
 const vvs = require('./index.js')
 
-
-
 /**
  * @typedef type_options_bracket
  * @property {string} left

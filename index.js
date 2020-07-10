@@ -20,7 +20,7 @@ exports.toIp=toIp
 exports.toArray=toArray
 exports.toCharArray=toCharArray
 exports.toErrorMessage=toErrorMessage
-
+exports.toHtml=toHtml
 
 exports.split=split
 exports.insertAt=insertAt
@@ -787,6 +787,21 @@ function toErrorMessage (error, prefix, replaces, sourсe) {
     }
 
     return p.concat(e)
+}
+
+/**
+ * Return string for inject in html
+ * @param {string} value
+ * @returns {string}
+ */
+function toHtml(value) {
+    let text = toString(value, '')
+    text = replaceAll(text, '&', '&amp;')
+    text = replaceAll(text, '<', '&lt;')
+    text = replaceAll(text, '>', '&gt;')
+    text = replaceAll(text, '"', '&quot;')
+    text = replaceAll(text, "'", '&#39;')
+    return text
 }
 
 /**
