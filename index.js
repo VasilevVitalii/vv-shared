@@ -57,12 +57,6 @@ exports.parser = parser
 exports.paraco = lib_paraco
 exports.readdir = readdir
 
-//########## Don't remove this three commens!!!! ##########
-//########## BORDER_FOR_PACKET_VV_GUI #####################
-//########## Don't remove this three commens!!!! ##########
-
-
-
 /**
  * @typedef {lib_parser.type_options} parser_options
  */

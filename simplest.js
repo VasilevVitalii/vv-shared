@@ -753,62 +753,62 @@ class Simplest {
         return text
     }
 
-/**
- * split string, for example - '{asasdas}{234235}{}{vcvc}', and return array ['asasdas','234235','','vcvc']
- * @static
- * @param {any} string_for_split
- * @param {string} left left border
- * @param {string} right right border
- * @param {'no'|'collapse_with_lower'|'collapse_without_lower'} [collapse_doubles] default = 'no'
- * @returns {string[]}
- * @example console.log(require('vv-shared').split('{asasdas}{234235}{}{vcvc}','{','}'))
- */
-split(string_for_split, left, right, collapse_doubles) {
-    if (this.isEmpty(string_for_split)) {
-        return []
-    }
-    let ss = this.toString(string_for_split).trim()
-    let l = this.toString(left).trim()
-    let r = this.toString(right).trim()
-    if (this.isEmpty(ss) || this.isEmpty(l) || this.isEmpty(r)) return []
-    if (ss.indexOf(l) < 0 && ss.indexOf(r) < 0) {
-        return [ss]
-    }
-    let ret = []
-
-    let ss_by_left = ss.split(left).map(m => { return m.trim() })
-    if (ss_by_left.length > 0 && ss_by_left[0] === '') {
-        ss_by_left.splice(0, 1)
-    }
-    // @ts-ignore
-    collapse_doubles = this.toString(collapse_doubles,'no').toLowerCase()
-
-    ss_by_left.forEach((s,idx) => {
-        if (s.substring(s.length - r.length, s.length) === r) {
-            let push_candidate = s.substring(0, s.length - r.length)
-            if (push_candidate.includes(r)) {
-                throw new Error(this.format('in split string "{0}" with borders "{1}" and "{2}" in element #{3}(numbering from 0) excess right border',[ss, l, r, idx]))
-            }
-            if (collapse_doubles === 'collapse_without_lower') {
-                if (!ret.map(m => { return this.toString(m,'')}).includes(this.toString(push_candidate,''))) {
-                    ret.push(push_candidate)
-                }
-            } else if (collapse_doubles === 'collapse_with_lower') {
-                if (!ret.map(m => { return this.toString(m,'').toLowerCase() }).includes(this.toString(push_candidate,'').toLowerCase())) {
-                    ret.push(push_candidate)
-                }
-            } else if (collapse_doubles === 'no') {
-                ret.push(push_candidate)
-            } else {
-                throw new Error(this.format('in split string "{0}" with borders "{1}" and "{2}" bad param collapse_doubles = {3}',[ss, l, r, collapse_doubles]))
-            }
-        } else {
-            throw new Error(this.format('in split string "{0}" with borders "{1}" and "{2}" in element #{3}(numbering from 0) excess left border',[ss, l, r, idx]))
+    /**
+     * split string, for example - '{asasdas}{234235}{}{vcvc}', and return array ['asasdas','234235','','vcvc']
+     * @static
+     * @param {any} string_for_split
+     * @param {string} left left border
+     * @param {string} right right border
+     * @param {'no'|'collapse_with_lower'|'collapse_without_lower'} [collapse_doubles] default = 'no'
+     * @returns {string[]}
+     * @example console.log(require('vv-shared').split('{asasdas}{234235}{}{vcvc}','{','}'))
+     */
+    split(string_for_split, left, right, collapse_doubles) {
+        if (this.isEmpty(string_for_split)) {
+            return []
         }
-    })
+        let ss = this.toString(string_for_split).trim()
+        let l = this.toString(left).trim()
+        let r = this.toString(right).trim()
+        if (this.isEmpty(ss) || this.isEmpty(l) || this.isEmpty(r)) return []
+        if (ss.indexOf(l) < 0 && ss.indexOf(r) < 0) {
+            return [ss]
+        }
+        let ret = []
 
-    return ret
-}
+        let ss_by_left = ss.split(left).map(m => { return m.trim() })
+        if (ss_by_left.length > 0 && ss_by_left[0] === '') {
+            ss_by_left.splice(0, 1)
+        }
+        // @ts-ignore
+        collapse_doubles = this.toString(collapse_doubles,'no').toLowerCase()
+
+        ss_by_left.forEach((s,idx) => {
+            if (s.substring(s.length - r.length, s.length) === r) {
+                let push_candidate = s.substring(0, s.length - r.length)
+                if (push_candidate.includes(r)) {
+                    throw new Error(this.format('in split string "{0}" with borders "{1}" and "{2}" in element #{3}(numbering from 0) excess right border',[ss, l, r, idx]))
+                }
+                if (collapse_doubles === 'collapse_without_lower') {
+                    if (!ret.map(m => { return this.toString(m,'')}).includes(this.toString(push_candidate,''))) {
+                        ret.push(push_candidate)
+                    }
+                } else if (collapse_doubles === 'collapse_with_lower') {
+                    if (!ret.map(m => { return this.toString(m,'').toLowerCase() }).includes(this.toString(push_candidate,'').toLowerCase())) {
+                        ret.push(push_candidate)
+                    }
+                } else if (collapse_doubles === 'no') {
+                    ret.push(push_candidate)
+                } else {
+                    throw new Error(this.format('in split string "{0}" with borders "{1}" and "{2}" bad param collapse_doubles = {3}',[ss, l, r, collapse_doubles]))
+                }
+            } else {
+                throw new Error(this.format('in split string "{0}" with borders "{1}" and "{2}" in element #{3}(numbering from 0) excess left border',[ss, l, r, idx]))
+            }
+        })
+
+        return ret
+    }
 
     /**
      * insert substring in string
@@ -1463,35 +1463,35 @@ split(string_for_split, left, right, collapse_doubles) {
         return result
     }
 
-    random16() {
-        let r = Math.random()
-        if (r <= 0.0625) return '0'
-        if (r <= 0.125) return '1'
-        if (r <= 0.1875) return '2'
-        if (r <= 0.25) return '3'
-        if (r <= 0.3125) return '4'
-        if (r <= 0.375) return '5'
-        if (r <= 0.4375) return '6'
-        if (r <= 0.5) return '7'
-        if (r <= 0.5625) return '8'
-        if (r <= 0.625) return '9'
-        if (r <= 0.6875) return 'A'
-        if (r <= 0.75) return 'B'
-        if (r <= 0.8125) return 'C'
-        if (r <= 0.875) return 'D'
-        if (r <= 0.9375) return 'E'
-        return 'F'
-    }
-
     /**
      * Generate NON-UNIQUE guid by very-sery simple idea, based only on Math.random()
      */
     guid() {
+        let random16 = function () {
+            let r = Math.random()
+            if (r <= 0.0625) return '0'
+            if (r <= 0.125) return '1'
+            if (r <= 0.1875) return '2'
+            if (r <= 0.25) return '3'
+            if (r <= 0.3125) return '4'
+            if (r <= 0.375) return '5'
+            if (r <= 0.4375) return '6'
+            if (r <= 0.5) return '7'
+            if (r <= 0.5625) return '8'
+            if (r <= 0.625) return '9'
+            if (r <= 0.6875) return 'A'
+            if (r <= 0.75) return 'B'
+            if (r <= 0.8125) return 'C'
+            if (r <= 0.875) return 'D'
+            if (r <= 0.9375) return 'E'
+            return 'F'
+        }
+
         return this.format('{0}{1}{2}{3}{4}{5}{6}{7}-{0}{9}{10}{11}-0{12}{13}{14}-{15}{16}{17}{18}-{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}', [
-            this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(),
-            this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(),
-            this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(), this.random16(),
-            this.random16(), this.random16()
+            random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(),
+            random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(),
+            random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(), random16(),
+            random16(), random16()
         ])
     }
 }
