@@ -457,11 +457,12 @@ class Simplest {
                 }
             } else
             // 2018-04-16
+            // 2018/04/16
             if (value.length === 10
                 && !this.isEmpty(this.toInt(value.substring(0,4)))
-                && value.substring(4,5) === '-'
+                && ['-', '/'].includes(value.substring(4,5))
                 && !this.isEmpty(this.toInt(value.substring(5,7)))
-                && value.substring(7,8) === '-'
+                && ['-', '/'].includes(value.substring(7,8))
                 && !this.isEmpty(this.toInt(value.substring(8,10)))
             ) {
                 year = this.toInt(value.substring(0,4))
