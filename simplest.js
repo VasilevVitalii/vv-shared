@@ -962,7 +962,7 @@ class Simplest {
      * Format date to string
      * @static
      * @param {any} date date
-     * @param {112|1122|1123|1124|126|10126|104|104108|1041082|1041083|1041084|'dy'|'sd'} format variants: 112 (yyyymmdd), 1122 (yyyymmddhh), 1123 (yyyymmddhhmi), 1124 (yyyymmddhhmiss), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss), , 'dy' (string (length 3) with number day in year), 'sd' (string (length 3) with number second in day)
+     * @param {111|112|1122|1123|1124|126|10126|104|104108|1041082|1041083|1041084|'dy'|'sd'} format variants: 111 (yyyy/mm/dd), 112 (yyyymmdd), 1122 (yyyymmddhh), 1123 (yyyymmddhhmi), 1124 (yyyymmddhhmiss), 126 (yyyy-mm-ddThh:mi:ss.mmm), 10126 (yyyy-mm-dd-hh-mi-ss-mmm), 104 (dd.mm.yyyy), 104108(dd.mm.yyyy hh:mi:ss), 1041082(dd.mm.yyyy hh:mi), 1041083(yyyy.mm.dd hh:mi), 1041084(yyyy.mm.dd hh:mi:ss), , 'dy' (string (length 3) with number day in year), 'sd' (string (length 3) with number second in day)
      * @returns {string} string or undefined
      * @example
      * console.log(require('vv-shared').formatDate(new Date(),126)) // return current date as string in format yyyy-mm-ddThh:mi:ss.mmm
@@ -994,6 +994,16 @@ class Simplest {
         let msec = d.getMilliseconds()
 
         switch (f) {
+            case '111':
+                return ''.concat(
+                    year.toString(),
+                    '/',
+                    (month > 9 ? '' : '0'),
+                    month.toString(),
+                    '/',
+                    (day > 9 ? '' : '0'),
+                    day.toString()
+                )
             case '112':
                 return ''.concat(
                     year.toString(),
