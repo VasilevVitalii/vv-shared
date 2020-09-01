@@ -59,7 +59,7 @@ function from_text(text, options) {
     items2.forEach((item, idx) => {
         let paragraph_maybe = item.trim()
         if (!vvs.equal(paragraph_maybe.substring(0, paragraph_prefix.length), paragraph_prefix)) {
-            current_text.push(items1[idx])
+            current_text.push(items2[idx])
             return
         }
 
