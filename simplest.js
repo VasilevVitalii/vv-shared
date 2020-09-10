@@ -1314,6 +1314,11 @@ class Simplest {
                 if (Buffer.isBuffer(buff)) return buff
                 return default_value
             }
+            if (t === 'object' && Array.isArray(default_value)) {
+                let arr = object_for_find[property]
+                if (Array.isArray(arr)) return arr
+                return default_value
+            }
             return object_for_find[property]
         }
     }
