@@ -108,7 +108,7 @@ function parser(parser_options) {
  * Recursive scan directory
  * @static
  * @param {string} dir
- * @param {type_readdir_options} [options]
+ * @param {type_readdir_options} options
  * @param {callback_readdir} callback
  * @example
  * require('vv-shared').readdir(__dirname, undefined, (error, files) => {console.log(files)} )

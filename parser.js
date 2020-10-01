@@ -67,6 +67,10 @@ class Parser {
         this.options = {
             string_border: string_border,
             end_of_command: end_of_command,
+            end_of_command_has_enter: () => {
+                if (this.options.end_of_command.some(f => f === '\n')) return true
+                return false
+            },
             one_string_comment: one_string_comment,
             brackets: brackets,
             all_lexems: all_lexems
@@ -240,7 +244,9 @@ class Parser {
             throw new Error (vvs.format('incorrect sequence of opening and closing string detected'))
         }
 
-        return result.filter(f => !vvs.isEmptyString(f)).map(m => { return m.trim() })
+        return result
+            .filter(f => !vvs.isEmptyString(f) || (this.options.end_of_command_has_enter() && f === '\n'))
+            .map(m => { return this.options.end_of_command_has_enter() && m === '\n' ? m : m.trim() })
     }
 
     /**
@@ -329,9 +335,12 @@ function tree_bracked(text, parser, result, depth) {
         depth--
     }
     let plain = parser.lexemify_plain(text)
+
     plain.forEach((item, idx_item) => {
-        if (vvs.isEmptyString(item)) return
-        item = item.trim()
+        if (!parser.options.end_of_command_has_enter() || item !== '\n') {
+            if (vvs.isEmptyString(item)) return
+            item = item.trim()
+        }
 
         if (!vvs.isEmpty(depth) && depth < 0) {
             result.push({type: 'lexem', final: item})
@@ -364,7 +373,11 @@ function tree_bracked(text, parser, result, depth) {
  * @returns {type_lexem_type}
  */
 function lexem_type(text, parser) {
-    if (vvs.isEmptyString(text)) return 'lexem'
+
+    if (!parser.options.end_of_command_has_enter() || text !== '\n') {
+        if (vvs.isEmptyString(text)) return 'lexem'
+    }
+
     if (parser.options.end_of_command.some(f => vvs.equal(f, text))) {
         return 'command'
     }

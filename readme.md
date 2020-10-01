@@ -12,7 +12,7 @@ console.log(vvs.toString(42))
 <dt><a href="#parser">parser(parser_options)</a> ⇒ <code>lib_parser</code></dt>
 <dd><p>Simple parser for, example, js code or sql code</p>
 </dd>
-<dt><a href="#readdir">readdir(dir, [options], callback)</a></dt>
+<dt><a href="#readdir">readdir(dir, options, callback)</a></dt>
 <dd><p>Recursive scan directory</p>
 </dd>
 </dl>
@@ -49,7 +49,7 @@ let parser = require('vv-shared').parser({ brackets: {left: '(', right: ')'}, en
 ```
 <a name="readdir"></a>
 
-## readdir(dir, [options], callback)
+## readdir(dir, options, callback)
 Recursive scan directory
 
 **Kind**: global function  
@@ -57,7 +57,7 @@ Recursive scan directory
 | Param | Type |
 | --- | --- |
 | dir | <code>string</code> | 
-| [options] | [<code>type\_readdir\_options</code>](#type_readdir_options) | 
+| options | [<code>type\_readdir\_options</code>](#type_readdir_options) | 
 | callback | <code>callback\_readdir</code> | 
 
 **Example**  
