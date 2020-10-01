@@ -37,7 +37,12 @@ class Parser {
         let o = vvs.isEmpty(options) ? {} : options
 
         let string_border = vvs.toArray(o.string_border, 'string').filter(f => !vvs.isEmptyString(f))
-        let end_of_command = vvs.toArray(o.end_of_command, 'string').filter(f => !vvs.isEmptyString(f))
+        let end_of_command = vvs.toArray(o.end_of_command, 'string')
+        for (let i = 0; i < end_of_command.length; i++) {
+            if (end_of_command[i] === os.EOL) {
+                end_of_command[i] = '\n'
+            }
+        }
         let brackets = vvs.toArray(o.brackets).filter(f => !vvs.isEmpty(f) && !vvs.isEmptyString(f.left) && !vvs.isEmptyString(f.right)).map(m => { return {left: vvs.toString(m.left), right: vvs.toString(m.right)} })
         let one_string_comment = vvs.toString(o.one_string_comment, '')
 
