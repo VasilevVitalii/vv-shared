@@ -313,7 +313,7 @@ class Parser {
  * @param {string} text
  * @param {Parser} parser
  * @param {type_lexem[]} [result]
- * @param {number} depth
+ * @param {number} [depth]
  */
 function tree_bracked(text, parser, result, depth) {
     if (!vvs.isEmpty(depth)) {
