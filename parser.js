@@ -224,6 +224,10 @@ class Parser {
 
             line = line.concat(char)
         }
+        if (line.length > 0) {
+            result.push(line)
+        }
+
         if (opening_bracked.length > 0) {
             throw new Error (vvs.format('incorrect sequence of opening and closing brackets detected'))
         }
