@@ -339,6 +339,9 @@ class Simplest {
      * console.log(require('vv-shared').toDate('12.04.2018')) // return true date
      * console.log(require('vv-shared').toDate('12.04.2018 16:35')) // return true date
      * console.log(require('vv-shared').toDate('12.04.2018 16:35:49')) // return true date
+     * console.log(require('vv-shared').toDate('12-04-2018')) // return true date
+     * console.log(require('vv-shared').toDate('12-04-2018 16:35')) // return true date
+     * console.log(require('vv-shared').toDate('12-04-2018 16:35:49')) // return true date
      * console.log(require('vv-shared').toDate('20180412')) // return true date
      */
     toDate(value, default_value) {
@@ -421,13 +424,17 @@ class Simplest {
             // 12.04.2018 16:35:49
             // 12.04.2018 16:35
             // 12.04.2018
+            // 12-04-2018 16:35:49
+            // 12-04-2018 16:35
+            // 12-04-2018
             if (value.length >= 10
                 && value.length <= 19
                 && !this.isEmpty(this.toInt(value.substring(0,2)))
-                && value.substring(2,3) === '.'
+                && ['.', '-'].includes(value.substring(2,3))
                 && !this.isEmpty(this.toInt(value.substring(3,5)))
-                && value.substring(5,6) === '.'
+                && ['.', '-'].includes(value.substring(5,6))
                 && !this.isEmpty(this.toInt(value.substring(6,10)))
+                && value.substring(2,3) === value.substring(5,6)
             ) {
                 day = this.toInt(value.substring(0,2))
                 month = this.toInt(value.substring(3,5))
