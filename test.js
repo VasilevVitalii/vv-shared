@@ -414,6 +414,18 @@ describe("toCharArray", function() {
     })
 })
 
+describe("roundFload", function() {
+    it('for 1st undefined return undefined', function() {
+        assert.equal(testing_lib.roundFload(undefined, 5), undefined)
+    })
+    it('for 2nd undefined return undefined', function() {
+        assert.equal(testing_lib.roundFload(5, undefined), undefined)
+    })
+    it('for 1.12121 return 1.1212', function() {
+        assert.equal(testing_lib.roundFload(1.12121, 4), 1.1212)
+    })
+})
+
 describe("split", function() {
     it('for string "" return empty array', function() {
         assert.equal(testing_lib.split('','','').join('#'), '')

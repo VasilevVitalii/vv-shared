@@ -762,6 +762,22 @@ class Simplest {
     }
 
     /**
+     * True round
+     * @param {number} value
+     * @param {number} digits
+     * @returns {number}
+     * @example console.log(require('vv-shared').round(1.121212, 4))
+     */
+    roundFload(value, digits) {
+        let v = this.toFloat(value)
+        let d = this.toInt(digits)
+        if (this.isEmpty(v) || this.isEmpty(d)) return undefined
+        let int = value.toString()+'e'+digits.toString()
+        //@ts-ignore
+        return Number(Math.round(int)+'e-'+digits.toString())
+    }
+
+    /**
      * split string, for example - '{asasdas}{234235}{}{vcvc}', and return array ['asasdas','234235','','vcvc']
      * @static
      * @param {any} string_for_split
