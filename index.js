@@ -30,6 +30,7 @@ exports.toArray=simplest.toArray
 exports.toCharArray=simplest.toCharArray
 exports.toErrorMessage=simplest.toErrorMessage
 exports.toHtml=simplest.toHtml
+exports.toHex=simplest.toHex
 exports.roundFload = simplest.roundFload
 
 exports.split=simplest.split

@@ -599,6 +599,29 @@ class Simplest {
     }
 
     /**
+     * convert Buffer or Array[int] to hex
+     * @static
+     * @param {Buffer|Number[]} value
+     * @param {Buffer} [default_value]
+     * @returns {string}
+     */
+    toHex(value, default_value) {
+        if (this.isEmpty(value)) {
+            if (this.isEmpty(default_value)) {
+                return '0x'
+            } else {
+                return this.toHex(default_value)
+            }
+        }
+        if (Buffer.isBuffer(value)) {
+            return '0x'.concat(value.toString('hex'))
+        }
+        if (Array.isArray(value)) {
+            return '0x'.concat(Buffer.from( value.map(m => {return Number.isInteger(m) ? m : undefined})).toString('hex'))
+        }
+    }
+
+    /**
      * Contert object to string with IP format
      * @static
      * @param {any} value object for convert
