@@ -1,8 +1,9 @@
 {
   "name": "vv-shared",
-  "version": "3.0.22",
+  "version": "3.0.23",
   "description": "many small general-purpose functions",
   "main": "index.js",
+  "typings": "dist/index",
   "scripts": {
     "test": "mocha",
     "doc": "type .readme.md > readme.md && jsdoc2md index.js >> readme.md",

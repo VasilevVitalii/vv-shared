@@ -4,6 +4,7 @@
         "outDir": "./dist",
         "allowJs": true,
         "declaration": true,
-        "emitDeclarationOnly": true
+        "emitDeclarationOnly": true,
+        "esModuleInterop": true
     }
 }

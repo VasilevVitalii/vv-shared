@@ -88,4 +88,8 @@ import lib_paraco = require("./paraco.js");
  */
 export function readdir(dir: string, options: type_readdir_options, callback: callback_readdir): void;
 import lib_parser = require("./parser.js");
-export { isEmpty, isEmptyString, isFunction, isGuid, nz, equal, duplicates, toString, toStringDeclension, toInt, toFloat, toBool, toGuid, toDate, toDateWithoutTime, toTime, toIp, toArray, toCharArray, toErrorMessage, toHtml, toHex, roundFload, split, insertAt, replaceAll, format, formatExt, formatDate, cutFromArray, dateAdd, findPropertyInObject, findPropertyExistsInObject, findPropertyValueInObject, border_add, border_del, text_page_char, text_page_byte, guid, lib_paraco as paraco };
+
+import lib_simplest = require("./simplest.js");
+export {lib_simplest, lib_paraco as paraco };
+
+//export { isEmpty, isEmptyString, isFunction, isGuid, nz, equal, duplicates, toString, toStringDeclension, toInt, toFloat, toBool, toGuid, toDate, toDateWithoutTime, toTime, toIp, toArray, toCharArray, toErrorMessage, toHtml, toHex, roundFload, split, insertAt, replaceAll, format, formatExt, formatDate, cutFromArray, dateAdd, findPropertyInObject, findPropertyExistsInObject, findPropertyValueInObject, border_add, border_del, text_page_char, text_page_byte, guid, lib_paraco as paraco };
