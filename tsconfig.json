@@ -1,10 +1,11 @@
 {
-    "include": ["index.js", "simplest.js"],
+    "include": ["index.js"],
     "compilerOptions": {
         "outDir": "./dist",
         "allowJs": true,
         "declaration": true,
         "emitDeclarationOnly": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "sourceMap": true
     }
 }
