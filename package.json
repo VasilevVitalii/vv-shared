@@ -1,6 +1,6 @@
 {
   "name": "vv-shared",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "many small general-purpose functions",
   "main": "index.js",
   "scripts": {

@@ -1,8 +1,4 @@
 // @ts-check
-const fs = require('fs')
-const path = require('path')
-const lib_parser = require('./parser.js')
-const lib_paraco = require('./paraco.js')
 
 const REGEX_INT=/^[+\-]?\d+$/
 const REGEX_FLOAT=/^[+-]?\d+(\.\d+)?$/
@@ -1669,6 +1665,14 @@ function guid() {
 }
 exports.guid = guid
 
+//DONT'T REMOVE THIS COMMENT!!!!
+//=====FOR WEB SIMPLEST
+
+const fs = require('fs')
+const path = require('path')
+const lib_parser = require('./parser.js')
+const lib_paraco = require('./paraco.js')
+
 exports.parser = parser
 exports.paraco = lib_paraco
 exports.readdir = readdir
@@ -1731,23 +1735,24 @@ function parser(parser_options) {
  */
 function readdir(dir, options, callback) {
     let already_send_callback = false
-    if (isEmpty(options)) {
+    if (this.isEmpty(options)) {
         options = {
             mode: 'files'
         }
     } else {
-        if (isEmpty(options.mode)) options.mode = 'files'
+        if (this.isEmpty(options.mode)) options.mode = 'files'
     }
-    readdir_private(dir, options, (error, files) => {
+    let self = this
+    readdir_private(self, dir, options, (error, files) => {
         if (already_send_callback) return
         already_send_callback = true
         callback(
             error,
-            isEmpty(files) || !Array.isArray(files) ? undefined : files.sort((a,b) => {
+            self.isEmpty(files) || !Array.isArray(files) ? undefined : files.sort((a,b) => {
                 if (a.path < b.path) return -1
                 if (a.path > b.path) return 1
-                let e_a = isEmptyString(a)
-                let e_b = isEmptyString(b)
+                let e_a = self.isEmptyString(a)
+                let e_b = self.isEmptyString(b)
                 if (e_a && !e_b) return -1
                 if (!e_a && e_b) return 1
                 if (a.file < b.file) return -1
@@ -1760,16 +1765,17 @@ function readdir(dir, options, callback) {
 
 /**
  * @private
+ * @param {Object} self
  * @param {string} dir
  * @param {type_readdir_options} options
  * @param {callback_readdir} callback
  */
-function readdir_private(dir, options, callback) {
+function readdir_private(self, dir, options, callback) {
     /** @type {type_readdir[]} */
     let files = []
 
     fs.readdir(dir, (error, list) => {
-        if (!isEmpty(error)) {
+        if (!self.isEmpty(error)) {
             callback(new Error(toErrorMessage(error, 'on read dir "{0}"', dir, 'message')), undefined)
         }
         let pending = list.length
@@ -1778,10 +1784,10 @@ function readdir_private(dir, options, callback) {
         list.forEach(file_relative => {
             let file_absolute = path.resolve(dir, file_relative)
             fs.stat(file_absolute, function(error, stat) {
-                if (!isEmpty(error)) {
+                if (!self.isEmpty(error)) {
                     callback(new Error(toErrorMessage(error, 'on get stat for file/dir "{0}"', file_absolute, 'message')), undefined)
                 }
-                if (!isEmpty(stat)) {
+                if (!self.isEmpty(stat)) {
                     if (stat.isDirectory()) {
                         if ((options.mode === 'all' || options.mode === 'paths')) {
                             files.push({
@@ -1792,8 +1798,8 @@ function readdir_private(dir, options, callback) {
                                 date_edit: stat.mtime
                             })
                         }
-                        readdir_private(file_absolute, options, function(error, res) {
-                            if (!isEmpty(error)) {
+                        readdir_private(self, file_absolute, options, function(error, res) {
+                            if (!self.isEmpty(error)) {
                                 callback(error, undefined)
                             }
                             files = files.concat(res)
