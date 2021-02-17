@@ -1469,35 +1469,39 @@ exports.findPropertyValueInObject = findPropertyValueInObject
  * @returns {type_findSubstrings_result[]} array positions where find text
  */
 function findSubstrings(params) {
-    if (this.isEmpty(params) || this.isEmpty(params.text_find)) return []
+    if (this.isEmpty(params) || this.isEmpty(params.text_find) || this.isEmpty(params.text_where_find)) return []
 
     let toLower = params.matchCase === true ? false : true
 
     /** @type {string[]} */
-    let text_where_find_arr = this.toArray(params.text_where_find, 'string')
+    let text_where_find_arr = Array.isArray(params.text_where_find) ? Array.from(params.text_where_find) : [params.text_where_find]
     if (toLower) {
-        text_where_find_arr = text_where_find_arr.map(m => { return m.toLowerCase() })
+        text_where_find_arr = text_where_find_arr.map(m => { return this.isEmptyString(m) ? m : m.toLowerCase() })
     }
 
     let text_find_arr = (this.isEmpty(params.divider_find) ? [params.text_find] : params.text_find.split(params.divider_find))
     if (toLower) {
-        text_find_arr = text_find_arr.map(m => { return m.toLowerCase() })
+        text_find_arr = text_find_arr.map(m => { return this.isEmptyString(m) ? m : m.toLowerCase() })
     }
 
     /** @private @type {type_findSubstrings_result[]}*/
     let res = []
 
     text_where_find_arr.forEach((text, line) => {
-        text_find_arr.forEach(find => {
-            let idx = 0
-            while (idx >= 0) {
-                idx = text.indexOf(find, idx)
-                if (idx >= 0) {
-                    res.push({start: idx, end: idx + find.length, line: line})
-                    idx++
+        if (!this.isEmpty(text)) {
+            text_find_arr.forEach(find => {
+                if (!this.isEmpty(find)) {
+                    let idx = 0
+                    while (idx >= 0) {
+                        idx = text.indexOf(find, idx)
+                        if (idx >= 0) {
+                            res.push({start: idx, end: idx + find.length, line: line})
+                            idx++
+                        }
+                    }
                 }
-            }
-        })
+            })
+        }
     })
 
     return res
