@@ -1450,6 +1450,61 @@ function findPropertyValueInObject (object, property_name, default_value) {
 exports.findPropertyValueInObject = findPropertyValueInObject
 
 /**
+ * @typedef type_findSubstrings
+ * @property {string|string[]} text_where_find text where need find
+ * @property {string} text_find text find
+ * @property {string} [divider_find] how split text_find in substring
+ * @property {boolean} [matchCase] default false
+ */
+/**
+ * @typedef type_findSubstrings_result
+ * @property {number} start
+ * @property {number} end
+ * @property {number} line
+ */
+/**
+ * Find substrings in text array
+ * @static
+ * @param {type_findSubstrings} params
+ * @returns {type_findSubstrings_result[]} array positions where find text
+ */
+function findSubstrings(params) {
+    if (this.isEmpty(params) || this.isEmpty(params.text_find)) return []
+
+    let toLower = params.matchCase === true ? false : true
+
+    /** @type {string[]} */
+    let text_where_find_arr = this.toArray(params.text_where_find, 'string')
+    if (toLower) {
+        text_where_find_arr = text_where_find_arr.map(m => { return m.toLowerCase() })
+    }
+
+    let text_find_arr = (this.isEmpty(params.divider_find) ? [params.text_find] : params.text_find.split(params.divider_find))
+    if (toLower) {
+        text_find_arr = text_find_arr.map(m => { return m.toLowerCase() })
+    }
+
+    /** @private @type {type_findSubstrings_result[]}*/
+    let res = []
+
+    text_where_find_arr.forEach((text, line) => {
+        text_find_arr.forEach(find => {
+            let idx = 0
+            while (idx >= 0) {
+                idx = text.indexOf(find, idx)
+                if (idx >= 0) {
+                    res.push({start: idx, end: idx + find.length, line: line})
+                    idx++
+                }
+            }
+        })
+    })
+
+    return res
+}
+exports.findSubstrings = findSubstrings
+
+/**
  * For left and right in string add border string, if border not exists
  * @static
  * @param {any} string_where_add string where need add border

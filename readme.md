@@ -111,6 +111,9 @@ console.log(vvs.toString(42))
 <dt><a href="#findPropertyValueInObject">findPropertyValueInObject(object, property_name, [default_value])</a> ⇒ <code>any</code></dt>
 <dd><p>Search value by case insensitive property name in object</p>
 </dd>
+<dt><a href="#findSubstrings">findSubstrings(params)</a> ⇒ <code><a href="#type_findSubstrings_result">Array.&lt;type_findSubstrings_result&gt;</a></code></dt>
+<dd><p>Find substrings in text array</p>
+</dd>
 <dt><a href="#border_add">border_add(string_where_add, [left], [right])</a> ⇒ <code>string</code></dt>
 <dd><p>For left and right in string add border string, if border not exists</p>
 </dd>
@@ -137,6 +140,10 @@ console.log(vvs.toString(42))
 ## Typedefs
 
 <dl>
+<dt><a href="#type_findSubstrings">type_findSubstrings</a></dt>
+<dd></dd>
+<dt><a href="#type_findSubstrings_result">type_findSubstrings_result</a></dt>
+<dd></dd>
 <dt><a href="#type_text_page_char">type_text_page_char</a></dt>
 <dd></dd>
 <dt><a href="#type_text_page_byte">type_text_page_byte</a></dt>
@@ -683,6 +690,22 @@ Search value by case insensitive property name in object
 ```js
 console.log(require('vv-shared').findPropertyValueInObject({a: 5},'a')) // 5console.log(require('vv-shared').findPropertyValueInObject({a: 5},'A')) // 5console.log(require('vv-shared').findPropertyValueInObject({a: 5},'b')) // return undefinedconsole.log(require('vv-shared').findPropertyValueInObject({a: 5},undefined)) // return undefinedconsole.log(require('vv-shared').findPropertyValueInObject(undefined,'a')) // return undefined
 ```
+<a name="findSubstrings"></a>
+
+## findSubstrings(params) ⇒ [<code>Array.&lt;type\_findSubstrings\_result&gt;</code>](#type_findSubstrings_result)
+Find substrings in text array
+
+**Kind**: global function  
+**Returns**: [<code>Array.&lt;type\_findSubstrings\_result&gt;</code>](#type_findSubstrings_result) - array positions where find text  
+
+| Param | Type |
+| --- | --- |
+| params | [<code>type\_findSubstrings</code>](#type_findSubstrings) | 
+
+<a name="findSubstrings..text_where_find_arr"></a>
+
+### findSubstrings~text\_where\_find\_arr : <code>Array.&lt;string&gt;</code>
+**Kind**: inner property of [<code>findSubstrings</code>](#findSubstrings)  
 <a name="border_add"></a>
 
 ## border\_add(string_where_add, [left], [right]) ⇒ <code>string</code>
@@ -781,6 +804,31 @@ Recursive scan directory
 ```js
 require('vv-shared').readdir(__dirname, undefined, (error, files) => {console.log(files)} )
 ```
+<a name="type_findSubstrings"></a>
+
+## type\_findSubstrings
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| text_where_find | <code>string</code> \| <code>Array.&lt;string&gt;</code> | text where need find |
+| text_find | <code>string</code> | text find |
+| [divider_find] | <code>string</code> | how split text_find in substring |
+| [matchCase] | <code>boolean</code> | default false |
+
+<a name="type_findSubstrings_result"></a>
+
+## type\_findSubstrings\_result
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| start | <code>number</code> | 
+| end | <code>number</code> | 
+| line | <code>number</code> | 
+
 <a name="type_text_page_char"></a>
 
 ## type\_text\_page\_char

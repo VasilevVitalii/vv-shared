@@ -1,3 +1,26 @@
+export type type_findSubstrings = {
+    /**
+     * text where need find
+     */
+    text_where_find: string | string[];
+    /**
+     * text find
+     */
+    text_find: string;
+    /**
+     * how split text_find in substring
+     */
+    divider_find?: string;
+    /**
+     * default false
+     */
+    matchCase?: boolean;
+};
+export type type_findSubstrings_result = {
+    start: number;
+    end: number;
+    line: number;
+};
 export type type_text_page_char = {
     step: number;
     position_start: number;
@@ -460,6 +483,26 @@ export function findPropertyExistsInObject(object: any, property_name: any): boo
  * console.log(require('vv-shared').findPropertyValueInObject(undefined,'a')) // return undefined
  */
 export function findPropertyValueInObject(object: any, property_name: string | string[], default_value?: any): any;
+/**
+ * @typedef type_findSubstrings
+ * @property {string|string[]} text_where_find text where need find
+ * @property {string} text_find text find
+ * @property {string} [divider_find] how split text_find in substring
+ * @property {boolean} [matchCase] default false
+ */
+/**
+ * @typedef type_findSubstrings_result
+ * @property {number} start
+ * @property {number} end
+ * @property {number} line
+ */
+/**
+ * Find substrings in text array
+ * @static
+ * @param {type_findSubstrings} params
+ * @returns {type_findSubstrings_result[]} array positions where find text
+ */
+export function findSubstrings(params: type_findSubstrings): type_findSubstrings_result[];
 /**
  * For left and right in string add border string, if border not exists
  * @static
